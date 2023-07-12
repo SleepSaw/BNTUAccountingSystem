@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
@@ -16,7 +15,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="mainBox" prefHeight="722.0" prefWidth="1218.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.bntu.accounting.bntuaccountingsystem.controllers.EmployeeInfoController">
+<VBox fx:id="mainBox" prefHeight="682.0" prefWidth="1218.0" xmlns="http://javafx.com/javafx/19"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.bntu.accounting.bntuaccountingsystem.controllers.EmployeeInfoController">
    <children>
        <MenuBar>
           <menus>
@@ -40,9 +40,10 @@
               </Menu>
           </menus>
        </MenuBar>
-      <BorderPane prefHeight="66.0" prefWidth="1218.0">
+      <BorderPane prefHeight="60.0" prefWidth="1218.0">
          <left>
-            <Button fx:id="backButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="116.0" text="Вернуться" textFill="#3d57ff" BorderPane.alignment="CENTER">
+            <Button fx:id="backButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="116.0"
+                    text="Вернуться" textFill="#3d57ff" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -50,41 +51,19 @@
          </left>
          <right>
             <BorderPane prefHeight="60.0" prefWidth="582.0" BorderPane.alignment="CENTER">
-               <right>
-                  <Button fx:id="importButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="173.0" text="Импортировать" BorderPane.alignment="CENTER">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-               </right>
-               <center>
-                  <Label alignment="CENTER" prefHeight="19.0" prefWidth="365.0" text="Выберите Excel документ для добавления педработников" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-               </center>
                <BorderPane.margin>
                   <Insets right="20.0" />
                </BorderPane.margin>
+               <right>
+                  <Label prefHeight="35.0" prefWidth="372.0" text="Информация о педработниках" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </right>
             </BorderPane>
          </right>
       </BorderPane>
-      <HBox prefHeight="45.0" prefWidth="1219.0">
-         <VBox.margin>
-            <Insets left="20.0" right="20.0" />
-         </VBox.margin>
-         <children>
-            <Label prefHeight="35.0" prefWidth="370.0" text="Информация о педработниках">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <HBox.margin>
-                  <Insets top="7.0" />
-               </HBox.margin>
-            </Label>
-         </children>
-      </HBox>
        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="500.0" prefWidth="1219.0">
           <content>
               <TableView fx:id="tableView" prefHeight="498.0" prefWidth="1167.0" VBox.vgrow="ALWAYS">
@@ -116,7 +95,8 @@
             <Insets left="20.0" right="20.0" top="10.0" />
          </VBox.margin>
          <children>
-            <Button fx:id="addButton" mnemonicParsing="false" prefHeight="43.0" prefWidth="140.0" text="Добавить">
+            <Button fx:id="addButton" mnemonicParsing="false"
+                    onAction="#handleButtonAction" prefHeight="43.0" prefWidth="140.0" text="Добавить">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>

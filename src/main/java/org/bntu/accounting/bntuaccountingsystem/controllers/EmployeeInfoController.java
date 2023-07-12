@@ -3,21 +3,25 @@ package org.bntu.accounting.bntuaccountingsystem.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.bntu.accounting.bntuaccountingsystem.excel.readers.TeacherReader;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
 
-import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class EmployeeInfoController {
+public class EmployeeInfoController implements Initializable {
 
     @FXML
     private VBox mainBox;
@@ -30,8 +34,6 @@ public class EmployeeInfoController {
 
     @FXML
     private Button backButton;
-    @FXML
-    private Button importButton;
 
     @FXML
     private TableColumn<Teacher, String> positionColumn;
@@ -58,25 +60,26 @@ public class EmployeeInfoController {
     private TableColumn<Teacher, Double> categoryColumn;
 
     @FXML
-    private void initialize() {
+    protected void handleButtonAction() throws IOException {
+        FXMLLoader loader = new FXMLLoader(EmployeeInfoController.class.getResource("/gui/add_employee.fxml"));
+        Stage newStage = new Stage();
+        newStage.setScene(new Scene(loader.load()));
+        newStage.setTitle("Новое окно");
+        newStage.show();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         mainBox.setStyle("-fx-background-color: white");
         backButton.setStyle("-fx-background-color: transparent");
         backButton.setCursor(Cursor.HAND);
         backButton.setOnAction(actionEvent -> {
-            System.out.println("Back to Main Window");
-        });
-        importButton.setOnAction(actionEvent -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Выберите документ для импорта");
-            Stage stage = (Stage) importButton.getScene().getWindow();
-            File selectedFile = fileChooser.showOpenDialog(stage);// Ограничение расширений файлов
-            if (selectedFile != null) {
-                if (selectedFile.getName().endsWith(".xlsx")) {
-                    // Обработка выбранного файла
-                    System.out.println("Выбран файл: " + selectedFile.getAbsolutePath());
-                } else {
-                    System.out.println("Выберите файл с расширением .xlsx");
-                }
+            try {
+                updateTable();
+                System.out.println("UPDATE TABLE");
+            }
+            catch (Exception e){
+                System.out.println("Bad news");
             }
         });
 
@@ -87,12 +90,19 @@ public class EmployeeInfoController {
         workExperienceColumn.setCellValueFactory(new PropertyValueFactory<Teacher,String>("workExperience"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<Teacher,Double>("category"));
         youngSpecialistColumn.setCellValueFactory(new PropertyValueFactory<Teacher,String>("youngSpecialist"));
+        updateTable();
+//        TeacherReader reader = new TeacherReader();
+//        List<Teacher> teachers = reader.readSheet();
+//        ObservableList<Teacher> teacherList = FXCollections.observableArrayList();
+//        teacherList.addAll(teachers);
+//
+//        tableView.setItems(teacherList);
+    }
+    private void updateTable(){
         TeacherReader reader = new TeacherReader();
         List<Teacher> teachers = reader.readSheet();
         ObservableList<Teacher> teacherList = FXCollections.observableArrayList();
         teacherList.addAll(teachers);
-
         tableView.setItems(teacherList);
     }
-
 }
