@@ -1,19 +1,85 @@
 package org.bntu.accounting.bntuaccountingsystem.models;
-
-public class Teacher extends Employee{
-    // Предмет, который преподаёт работник
-    private String subject;
-    // Нагрузка педагогического работника
-    private Load load;
-    // Молодой специалист
+import javax.persistence.*;
+@Entity
+@Table(name = "teacher")
+public class Teacher {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "post")
+    private String post;
+    @Column(name = "qualification")
+    private String qualification;
+    @Column(name = "exp")
+    private String exp;
+    @Column(name = "category")
+    private Integer category;
+    @Column(name = "young_specialist")
     private String youngSpecialist;
+    @Column(name = "subject")
+    private String subject;
 
     public Teacher() {
     }
 
-    public Teacher(String fio, String post, String subject, String qualification, String workExperience, int category, String youngSpecialist) {
-        super(fio, post, workExperience, qualification, category);
+    public Teacher(String name, String post,String subject, String qualification, String exp, Integer category, String youngSpecialist) {
+        this.name = name;
+        this.post = post;
+        this.qualification = qualification;
+        this.exp = exp;
+        this.category = category;
+        this.youngSpecialist = youngSpecialist;
         this.subject = subject;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getQualification() {
+        return qualification;
+    }
+
+    public void setQualification(String qualification) {
+        this.qualification = qualification;
+    }
+
+    public String getExp() {
+        return exp;
+    }
+
+    public void setExp(String exp) {
+        this.exp = exp;
+    }
+
+    public Integer getCategory() {
+        return category;
+    }
+
+    public void setCategory(Integer category) {
+        this.category = category;
+    }
+
+    public String getYoungSpecialist() {
+        return youngSpecialist;
+    }
+
+    public void setYoungSpecialist(String youngSpecialist) {
         this.youngSpecialist = youngSpecialist;
     }
 
@@ -25,24 +91,25 @@ public class Teacher extends Employee{
         this.subject = subject;
     }
 
-    public Load getLoad() {
-        return load;
+    public String getPost() {
+        return post;
     }
 
-    public void setLoad(Load load) {
-        this.load = load;
+    public void setPost(String post) {
+        this.post = post;
     }
 
-    public String getYoungSpecialist() {
-        return youngSpecialist;
-    }
-
-    public void setYoungSpecialist(String youngSpecialist) {
-        this.youngSpecialist = youngSpecialist;
-    }
     @Override
     public String toString() {
-        return super.toString() + " | " + subject + " | " + youngSpecialist + " | " +
-                 load + " | ";
+        return "Teacher{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", post='" + post + '\'' +
+                ", qualification='" + qualification + '\'' +
+                ", exp='" + exp + '\'' +
+                ", category='" + category + '\'' +
+                ", youngSpecialist='" + youngSpecialist + '\'' +
+                ", subject='" + subject + '\'' +
+                '}';
     }
 }

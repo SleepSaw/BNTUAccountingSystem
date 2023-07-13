@@ -1,12 +1,17 @@
 module org.bntu.accounting.bntuaccountingsystem {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.naming;
+    requires jakarta.persistence;
+    requires org.hibernate.orm.core;
+    requires hibernate.entitymanager;
+    requires java.persistence;
 
     requires org.kordamp.bootstrapfx.core;
     requires org.apache.poi.poi;
     requires org.apache.poi.ooxml;
 
     opens org.bntu.accounting.bntuaccountingsystem.controllers to javafx.fxml;
-    opens org.bntu.accounting.bntuaccountingsystem.models to javafx.base;
+    opens org.bntu.accounting.bntuaccountingsystem.models to org.hibernate.orm.core, javafx.base;
     exports org.bntu.accounting.bntuaccountingsystem;
 }

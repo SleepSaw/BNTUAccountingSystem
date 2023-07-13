@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.bntu.accounting.bntuaccountingsystem.controllers.AddEmployeeController;
 
 import java.io.IOException;
 

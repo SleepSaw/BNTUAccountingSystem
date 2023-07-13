@@ -15,8 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="mainBox" prefHeight="682.0" prefWidth="1218.0" xmlns="http://javafx.com/javafx/19"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.bntu.accounting.bntuaccountingsystem.controllers.EmployeeInfoController">
+<VBox fx:id="mainBox" prefHeight="682.0" prefWidth="1218.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.bntu.accounting.bntuaccountingsystem.controllers.EmployeeInfoController">
    <children>
        <MenuBar>
           <menus>
@@ -42,8 +41,7 @@
        </MenuBar>
       <BorderPane prefHeight="60.0" prefWidth="1218.0">
          <left>
-            <Button fx:id="backButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="116.0"
-                    text="Вернуться" textFill="#3d57ff" BorderPane.alignment="CENTER">
+            <Button fx:id="backButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="116.0" text="Вернуться" textFill="#3d57ff" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -68,17 +66,18 @@
           <content>
               <TableView fx:id="tableView" prefHeight="498.0" prefWidth="1167.0" VBox.vgrow="ALWAYS">
                   <columns>
-                      <TableColumn fx:id="fullNameColumn" prefWidth="189.0" text="ФИО" />
+                  <TableColumn fx:id="indexColumn" prefWidth="37.0" text="№" />
+                      <TableColumn fx:id="fullNameColumn" prefWidth="227.0" text="ФИО" />
                       <TableColumn fx:id="positionColumn" prefWidth="119.0" text="Должность" />
-                      <TableColumn fx:id="subjectColumn" prefWidth="387.0" text="Учебный предмет" />
-                      <TableColumn fx:id="qualificationColumn" minWidth="0.0" prefWidth="120.0" text="Квалификация" />
-                      <TableColumn fx:id="workExperienceColumn" minWidth="0.0" prefWidth="92.0" text="Стаж" />
-                  <TableColumn fx:id="categoryColumn" prefWidth="128.0" text="Тарифный разряд">
+                      <TableColumn fx:id="subjectColumn" prefWidth="327.0" text="Учебный предмет" />
+                      <TableColumn fx:id="qualificationColumn" minWidth="0.0" prefWidth="116.0" text="Квалификация" />
+                      <TableColumn fx:id="workExperienceColumn" minWidth="0.0" prefWidth="83.0" text="Стаж" />
+                  <TableColumn fx:id="categoryColumn" prefWidth="122.0" text="Тарифный разряд">
                      <cellValueFactory>
                         <PropertyValueFactory />
                      </cellValueFactory>
                   </TableColumn>
-                      <TableColumn fx:id="youngSpecialistColumn" prefWidth="141.0" text="Молодой специалист">
+                      <TableColumn fx:id="youngSpecialistColumn" prefWidth="144.0" text="Молодой специалист">
                           <cellValueFactory>
                               <PropertyValueFactory />
                           </cellValueFactory>
@@ -95,8 +94,7 @@
             <Insets left="20.0" right="20.0" top="10.0" />
          </VBox.margin>
          <children>
-            <Button fx:id="addButton" mnemonicParsing="false"
-                    onAction="#handleButtonAction" prefHeight="43.0" prefWidth="140.0" text="Добавить">
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="43.0" prefWidth="140.0" text="Добавить">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>

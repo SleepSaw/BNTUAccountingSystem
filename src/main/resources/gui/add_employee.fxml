@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="377.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="516.0" prefWidth="377.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.bntu.accounting.bntuaccountingsystem.controllers.AddEmployeeController">
    <top>
       <BorderPane prefHeight="79.0" prefWidth="433.0" BorderPane.alignment="CENTER">
          <bottom>
@@ -45,7 +45,7 @@
                         <Insets right="30.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField prefHeight="25.0" prefWidth="250.0">
+                  <TextField fx:id="fioTextField" prefHeight="25.0" prefWidth="250.0">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -65,7 +65,7 @@
                         <Insets right="30.0" />
                      </HBox.margin>
                   </Label>
-                  <ComboBox editable="true" prefHeight="25.0" prefWidth="191.0" promptText="Учитель" />
+                  <ComboBox fx:id="postComboBox" editable="true" prefHeight="25.0" prefWidth="191.0" promptText="Учитель" />
                </children>
                <VBox.margin>
                   <Insets bottom="20.0" />
@@ -81,7 +81,7 @@
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Label>
-                  <ComboBox editable="true" prefHeight="25.0" prefWidth="191.0" promptText="Английский язык" />
+                  <ComboBox fx:id="subjectComboBox" editable="true" prefHeight="25.0" prefWidth="191.0" promptText="Английский язык" />
                </children>
                <VBox.margin>
                   <Insets bottom="20.0" />
@@ -97,7 +97,7 @@
                         <Insets right="26.0" />
                      </HBox.margin>
                   </Label>
-                  <ComboBox editable="true" prefHeight="25.0" prefWidth="153.0" promptText="в.к.к." />
+                  <ComboBox fx:id="qualificationComboBox" editable="true" prefHeight="25.0" prefWidth="153.0" promptText="в.к.к." />
                </children>
                <VBox.margin>
                   <Insets bottom="20.0" />
@@ -113,7 +113,7 @@
                         <Insets right="55.0" />
                      </HBox.margin>
                   </Label>
-                  <ComboBox editable="true" prefHeight="25.0" prefWidth="155.0" promptText="До 5 лет" />
+                  <ComboBox fx:id="expComboBox" editable="true" prefHeight="25.0" prefWidth="155.0" promptText="До 5 лет" />
                </children>
                <VBox.margin>
                   <Insets bottom="20.0" />
@@ -129,7 +129,7 @@
                         <Insets right="35.0" />
                      </HBox.margin>
                   </Label>
-                  <ComboBox editable="true" prefHeight="25.0" prefWidth="128.0" promptText="10" />
+                  <ComboBox fx:id="tariffComboBox" editable="true" prefHeight="25.0" prefWidth="128.0" promptText="10" />
                </children>
                <VBox.margin>
                   <Insets bottom="20.0" />
@@ -145,7 +145,7 @@
                         <Insets right="50.0" />
                      </HBox.margin>
                   </Label>
-                  <ComboBox editable="true" prefHeight="25.0" prefWidth="137.0" promptText="Нет" />
+                  <ComboBox fx:id="specComboBox" editable="true" prefHeight="25.0" prefWidth="137.0" promptText="Нет" />
                </children>
                <VBox.margin>
                   <Insets bottom="20.0" />

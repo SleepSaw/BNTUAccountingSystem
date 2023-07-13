@@ -7,14 +7,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.bntu.accounting.bntuaccountingsystem.excel.readers.TeacherReader;
+import javafx.util.Callback;
+import org.bntu.accounting.bntuaccountingsystem.dao.TeacherDAO;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -22,6 +24,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class EmployeeInfoController implements Initializable {
+    private TeacherDAO teacherDAO;
 
     @FXML
     private VBox mainBox;
@@ -58,6 +61,8 @@ public class EmployeeInfoController implements Initializable {
 
     @FXML
     private TableColumn<Teacher, Double> categoryColumn;
+    @FXML
+    private TableColumn<Teacher, Integer> indexColumn;
 
     @FXML
     protected void handleButtonAction() throws IOException {
@@ -70,39 +75,51 @@ public class EmployeeInfoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mainBox.setStyle("-fx-background-color: white");
-        backButton.setStyle("-fx-background-color: transparent");
-        backButton.setCursor(Cursor.HAND);
-        backButton.setOnAction(actionEvent -> {
-            try {
-                updateTable();
-                System.out.println("UPDATE TABLE");
-            }
-            catch (Exception e){
-                System.out.println("Bad news");
+        indexColumn.setCellFactory(new Callback<TableColumn<Teacher, Integer>, TableCell<Teacher, Integer>>() {
+            @Override
+            public TableCell<Teacher, Integer> call(TableColumn<Teacher, Integer> param) {
+                return new TableCell<Teacher, Integer>() {
+                    @Override
+                    protected void updateItem(Integer item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!empty) {
+                            int rowIndex = getIndex() + 1;
+                            setText(String.valueOf(rowIndex));
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
             }
         });
 
-        fullNameColumn.setCellValueFactory(new PropertyValueFactory<Teacher,String>("fio"));
-        positionColumn.setCellValueFactory(new PropertyValueFactory<Teacher,String>("post"));
-        subjectColumn.setCellValueFactory(new PropertyValueFactory<Teacher,String>("subject"));
-        qualificationColumn.setCellValueFactory(new PropertyValueFactory<Teacher,String>("qualification"));
-        workExperienceColumn.setCellValueFactory(new PropertyValueFactory<Teacher,String>("workExperience"));
-        categoryColumn.setCellValueFactory(new PropertyValueFactory<Teacher,Double>("category"));
-        youngSpecialistColumn.setCellValueFactory(new PropertyValueFactory<Teacher,String>("youngSpecialist"));
-        updateTable();
-//        TeacherReader reader = new TeacherReader();
-//        List<Teacher> teachers = reader.readSheet();
-//        ObservableList<Teacher> teacherList = FXCollections.observableArrayList();
-//        teacherList.addAll(teachers);
-//
-//        tableView.setItems(teacherList);
+
+            teacherDAO = new TeacherDAO();
+            mainBox.setStyle("-fx-background-color: white");
+            backButton.setStyle("-fx-background-color: transparent");
+            backButton.setCursor(Cursor.HAND);
+            backButton.setOnAction(actionEvent -> {
+                try {
+                    updateTable();
+                    System.out.println("UPDATE TABLE");
+                } catch (Exception e) {
+                    System.out.println("Bad news");
+                }
+            });
+
+            fullNameColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("name"));
+            positionColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("post"));
+            subjectColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("subject"));
+            qualificationColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("qualification"));
+            workExperienceColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("exp"));
+            categoryColumn.setCellValueFactory(new PropertyValueFactory<Teacher, Double>("category"));
+            youngSpecialistColumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("youngSpecialist"));
+            updateTable();
+
+        }
+        private void updateTable () {
+            ObservableList<Teacher> teacherList = FXCollections.observableArrayList();
+            teacherList.addAll(teacherDAO.findAllTeachers());
+            tableView.setItems(teacherList);
+        }
     }
-    private void updateTable(){
-        TeacherReader reader = new TeacherReader();
-        List<Teacher> teachers = reader.readSheet();
-        ObservableList<Teacher> teacherList = FXCollections.observableArrayList();
-        teacherList.addAll(teachers);
-        tableView.setItems(teacherList);
-    }
-}

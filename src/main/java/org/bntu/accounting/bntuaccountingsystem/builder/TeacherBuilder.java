@@ -2,24 +2,24 @@ package org.bntu.accounting.bntuaccountingsystem.builder;
 
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class TeacherBuilder {
-    // Фамилия - Имя - Отчество
-    private String fio;
-    // Должность
-    private String post;
-    // Стаж работы
-    private String workExperience;
-    // Квалификация
+    private String name;
     private String qualification;
-    // Тарифный разряд
-    private int category;
-    // Предмет, который преподаёт работник
-    private String subject;
-    // Молодой специалист
+    private String post;
+
+    private String exp;
+    private Integer category;
     private String youngSpecialist;
 
-    public TeacherBuilder setFio(String fio) {
-        this.fio = fio;
+    private String subject;
+
+    public TeacherBuilder setName(String name) {
+        this.name = name;
         return this;
     }
 
@@ -28,8 +28,8 @@ public class TeacherBuilder {
         return this;
     }
 
-    public TeacherBuilder setWorkExperience(String workExperience) {
-        this.workExperience = workExperience;
+    public TeacherBuilder setWorkExperience(String exp) {
+        this.exp = exp;
         return this;
     }
 
@@ -53,6 +53,6 @@ public class TeacherBuilder {
         return this;
     }
     public Teacher build(){
-        return new Teacher(fio,post,subject,qualification,workExperience,category,youngSpecialist);
+        return new Teacher(name ,post,subject,qualification,exp,category,youngSpecialist);
     }
 }
