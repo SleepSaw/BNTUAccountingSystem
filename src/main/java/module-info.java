@@ -12,6 +12,7 @@ module org.bntu.accounting.bntuaccountingsystem {
     requires org.apache.poi.ooxml;
 
     opens org.bntu.accounting.bntuaccountingsystem.controllers to javafx.fxml;
-    opens org.bntu.accounting.bntuaccountingsystem.models to org.hibernate.orm.core, javafx.base;
+    opens org.bntu.accounting.bntuaccountingsystem.models to org.hibernate.orm.core, javafx.base,
+            java.persistence,hibernate.entitymanager;
     exports org.bntu.accounting.bntuaccountingsystem;
 }

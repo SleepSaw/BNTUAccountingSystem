@@ -1,5 +1,7 @@
 package org.bntu.accounting.bntuaccountingsystem.models;
+
 import javax.persistence.*;
+
 @Entity
 @Table(name = "teacher")
 public class Teacher {
@@ -21,6 +23,8 @@ public class Teacher {
     private String youngSpecialist;
     @Column(name = "subject")
     private String subject;
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER,mappedBy = "teacher")
+    private Load load;
 
     public Teacher() {
     }
@@ -98,6 +102,15 @@ public class Teacher {
     public void setPost(String post) {
         this.post = post;
     }
+
+    public Load getLoad() {
+        return load;
+    }
+
+    public void setLoad(Load load) {
+        this.load = load;
+    }
+
 
     @Override
     public String toString() {
