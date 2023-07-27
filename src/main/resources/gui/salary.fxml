@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="950.0" prefWidth="2026.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.bntu.accounting.bntuaccountingsystem.controllers.SalaryController">
+   <top>
+      <VBox prefHeight="73.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
+   </top>
+   <bottom>
+      <VBox prefHeight="72.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <center>
+      <ScrollPane prefHeight="805.0" prefWidth="1508.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets left="20.0" />
+         </BorderPane.margin>
+         <content>
+            <TableView fx:id="table" prefHeight="870.0" prefWidth="1515.0">
+              <columns>
+                <TableColumn fx:id="indexColumn" prefWidth="45.0" text="№" />
+                <TableColumn fx:id="nameColumn" prefWidth="147.0" text="ФИО" />
+                  <TableColumn fx:id="loadColumn" prefWidth="67.0" text="Нагрузка" />
+                  <TableColumn fx:id="categoryColumn" prefWidth="59.0" text="Разряд" />
+                  <TableColumn fx:id="coefColumn" minWidth="1.0" prefWidth="91.0" text="Тариф. коэф" />
+                  <TableColumn fx:id="salaryColumn" prefWidth="456.0" text="Оклад">
+                     <columns>
+                        <TableColumn fx:id="withoutLoadSalaryColumn" prefWidth="75.0" text="б. уч. нагр." />
+                        <TableColumn fx:id="withLoadSalaryColumn" prefWidth="75.0" text="с уч. нагр." />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn fx:id="allowancesColumn" prefWidth="483.0" text="Надбавки с учётом нагрузки">
+                     <columns>
+                        <TableColumn fx:id="expColumn" prefWidth="86.0" text="За стаж">
+                           <columns>
+                              <TableColumn fx:id="expRubColumn" prefWidth="75.0" text="Руб." />
+                              <TableColumn fx:id="expPercColumn" prefWidth="75.0" text="\%" />
+                           </columns>
+                        </TableColumn>
+                        <TableColumn fx:id="contractColumn" prefWidth="64.0" text="Контракт">
+                           <columns>
+                              <TableColumn fx:id="contractRubColumn" prefWidth="75.0" text="Руб." />
+                              <TableColumn fx:id="contractPercColumn" prefWidth="75.0" text="\%" />
+                           </columns>
+                        </TableColumn>
+                        <TableColumn fx:id="qualificationAllowanceColumn" prefWidth="88.0" text="Специф. раб.">
+                           <columns>
+                              <TableColumn fx:id="qualificationAllowanceRubColumn" prefWidth="75.0" text="Руб." />
+                              <TableColumn fx:id="qualificationAllowancePercColumn" prefWidth="75.0" text="\%" />
+                           </columns>
+                        </TableColumn>
+                        <TableColumn fx:id="youngSpecialistColumn" prefWidth="79.0" text="Мол. спец.">
+                           <columns>
+                              <TableColumn fx:id="youngSpecialistRubColumn" prefWidth="75.0" text="Руб." />
+                              <TableColumn fx:id="youngSpecialistPercColumn" prefWidth="75.0" text="\%" />
+                           </columns>
+                        </TableColumn>
+                        <TableColumn fx:id="sixPercentColumn" prefWidth="58.0" text="6 %" />
+                        <TableColumn fx:id="additionalColumn" prefWidth="75.0" text="Особ. проф. деят.">
+                           <columns>
+                              <TableColumn fx:id="AdditionalAllowanceRubColumn" prefWidth="75.0" text="Руб." />
+                              <TableColumn fx:id="AdditionalAllowancePercColumn" prefWidth="75.0" text="\%" />
+                           </columns>
+                        </TableColumn>
+                     </columns>
+                  </TableColumn>
+                  <TableColumn fx:id="totalSalaryColumn" prefWidth="148.0" text="Оклад с уч. надбавок" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </center>
+   <right>
+      <VBox prefHeight="805.0" prefWidth="444.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label contentDisplay="CENTER" prefHeight="41.0" prefWidth="378.0" text="Подробности" textAlignment="CENTER" underline="true">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+         <BorderPane.margin>
+            <Insets left="20.0" right="20.0" />
+         </BorderPane.margin>
+      </VBox>
+   </right>
+</BorderPane>
