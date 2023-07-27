@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -103,11 +104,7 @@ public class LoadWindowController implements Initializable {
         });
         // Установка обработчика события окончания редактирования ячейки
         orgLoadColumn.setOnEditCommit(event -> {
-            Teacher teacher = event.getRowValue();
-            teacher.getLoad().setOrgLoad(Double.parseDouble(event.getNewValue()));
-            teacher.getLoad().setTotalLoad(updateTotalLoad(teacher.getLoad()));
-            loadTable.refresh();
-            System.out.println(teacher.getLoad().getTotalLoad());
+
         });
         // Установка таблицы редактируемой
         loadTable.setEditable(true);
@@ -145,5 +142,24 @@ public class LoadWindowController implements Initializable {
                 };
             }
         });
+    }
+
+    @FXML
+    void academicLoadColumnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addLoadColumnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void orgLoadColumnActon(ActionEvent event) {
+
+    }
+    private void setEdit(ActionEvent event){
+
+
     }
 }

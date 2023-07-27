@@ -54,6 +54,7 @@ public class Load implements Serializable {
     }
 
     public double getTotalLoad() {
+        totalLoad = academicLoad + addLoad + orgLoad;
         return totalLoad;
     }
 

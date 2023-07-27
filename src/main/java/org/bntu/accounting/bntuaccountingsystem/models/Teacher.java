@@ -25,6 +25,8 @@ public class Teacher {
     private String subject;
     @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER,mappedBy = "teacher")
     private Load load;
+    @OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER,mappedBy = "teacher")
+    private Salary salary;
 
     public Teacher() {
     }
@@ -111,6 +113,13 @@ public class Teacher {
         this.load = load;
     }
 
+    public Salary getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Salary salary) {
+        this.salary = salary;
+    }
 
     @Override
     public String toString() {

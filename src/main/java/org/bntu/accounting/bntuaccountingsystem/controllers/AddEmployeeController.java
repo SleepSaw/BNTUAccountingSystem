@@ -57,7 +57,7 @@ public class AddEmployeeController implements Initializable {
         qualificationComboBox.setValue("б/к");
     }
     private void initExpComboBox(){
-        ObservableList<String> exps = FXCollections.observableArrayList("До 5 лет", "5-10 лет", "10-15 лет", "св. 15 лет");
+        ObservableList<String> exps = FXCollections.observableArrayList("До 5 лет", "5-10 лет", "10-15 лет", "cв. 15 лет");
         expComboBox.setItems(exps);
         expComboBox.setValue("До 5 лет");
     }

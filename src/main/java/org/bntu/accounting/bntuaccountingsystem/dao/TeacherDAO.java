@@ -3,6 +3,7 @@ package org.bntu.accounting.bntuaccountingsystem.dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.bntu.accounting.bntuaccountingsystem.models.Load;
+import org.bntu.accounting.bntuaccountingsystem.models.Salary;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -15,7 +16,8 @@ public class TeacherDAO {
     private final SessionFactory sessionFactory;
 
     public TeacherDAO() {
-        Configuration configuration = new Configuration().addAnnotatedClass(Teacher.class).addAnnotatedClass(Load.class);
+        Configuration configuration = new Configuration().addAnnotatedClass(Teacher.class).addAnnotatedClass(Load.class)
+                .addAnnotatedClass(Salary.class);
         sessionFactory = configuration.buildSessionFactory();
     }
     public List<Teacher> findAllTeachers(){

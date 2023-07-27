@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class CommonData {
 
-    private double baseRate;
+    private double baseRate = 228;
 
     private double industryAllowance = 0.06;
 
@@ -27,15 +27,35 @@ public class CommonData {
     }
     // Получение надбавки по стажу
     public double getAllowanceByExperience(String experience) throws NullPointerException{
-        return experienceAllowances.get(experience);
+        try {
+            return experienceAllowances.get(experience);
+        }
+        catch (NullPointerException e){
+            System.out.println("Exp exception");
+            return 0;
+        }
+
     }
     // Получение надбавки за квалификацию
     public double getAllowanceByQualification(String qualification) throws NullPointerException{
-        return qualificationAllowances.get(qualification);
+        try {
+            return qualificationAllowances.get(qualification);
+        }
+        catch (NullPointerException e){
+            System.out.println("Qual exception");
+            return 0;
+        }
     }
     // Получение надбавки молодого специалиста
     public double getYSAllowances(String specialistType) throws NullPointerException{
-        return youngSpecialistsAllowances.get(specialistType);
+        try {
+            return youngSpecialistsAllowances.get(specialistType);
+        }
+        catch (NullPointerException e){
+            System.out.println(e.getMessage());
+            return 0;
+        }
+
     }
 
     public double getBaseRate() {
@@ -96,16 +116,15 @@ public class CommonData {
         experienceAllowances.put("До 5 лет",0.1);
         experienceAllowances.put("5-10 лет",0.15);
         experienceAllowances.put("10-15 лет",0.20);
-        experienceAllowances.put("Св. 15",0.30);
+        experienceAllowances.put("св. 15 лет",0.30);
 
-        youngSpecialistsAllowances.put("Одарённым", 0.45);
-        youngSpecialistsAllowances.put("Прочим", 0.3);
+        youngSpecialistsAllowances.put("Одарённый", 0.45);
+        youngSpecialistsAllowances.put("Молодой специалист", 0.3);
 
-        qualificationAllowances.put("б.к.", 0.3);
+        qualificationAllowances.put("б/к", 0.3);
         qualificationAllowances.put("2-я к.к.", 0.4);
-        qualificationAllowances.put("1-я к.к.", 0.4);
-        qualificationAllowances.put("в.к.к.", 0.4);
-        qualificationAllowances.put("уч.-методист", 0.4);
-        qualificationAllowances.put("2 в.к.", 0.4);
+        qualificationAllowances.put("1-я к.к.", 0.5);
+        qualificationAllowances.put("в.к.к.", 0.65);
+        qualificationAllowances.put("уч.-методист", 0.80);
     }
 }

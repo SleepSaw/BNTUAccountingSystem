@@ -2,6 +2,7 @@ package org.bntu.accounting.bntuaccountingsystem.dao;
 
 import jakarta.persistence.PersistenceException;
 import org.bntu.accounting.bntuaccountingsystem.models.Load;
+import org.bntu.accounting.bntuaccountingsystem.models.Salary;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -15,7 +16,8 @@ public class LoadDAO {
     private final SessionFactory sessionFactory;
 
     public LoadDAO() {
-        Configuration configuration = new Configuration().addAnnotatedClass(Teacher.class).addAnnotatedClass(Load.class);
+        Configuration configuration = new Configuration().addAnnotatedClass(Teacher.class).addAnnotatedClass(Load.class)
+                .addAnnotatedClass(Salary.class);
         sessionFactory = configuration.buildSessionFactory();
     }
     public void saveLoads(List<Teacher> teachers){
