@@ -1,6 +1,5 @@
 package org.bntu.accounting.bntuaccountingsystem.services;
 
-import org.bntu.accounting.bntuaccountingsystem.builder.SalaryBuilder;
 import org.bntu.accounting.bntuaccountingsystem.models.CommonData;
 import org.bntu.accounting.bntuaccountingsystem.models.Load;
 import org.bntu.accounting.bntuaccountingsystem.models.Salary;

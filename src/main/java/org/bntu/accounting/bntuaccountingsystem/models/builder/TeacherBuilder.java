@@ -1,11 +1,6 @@
-package org.bntu.accounting.bntuaccountingsystem.builder;
+package org.bntu.accounting.bntuaccountingsystem.models.builder;
 
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 public class TeacherBuilder {
     private String name;

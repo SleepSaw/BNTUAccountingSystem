@@ -1,4 +1,4 @@
-package org.bntu.accounting.bntuaccountingsystem.excel.writers;
+package org.bntu.accounting.bntuaccountingsystem.file.excel.creators;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;

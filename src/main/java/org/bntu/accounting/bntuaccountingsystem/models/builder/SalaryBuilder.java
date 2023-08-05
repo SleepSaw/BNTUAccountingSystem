@@ -1,9 +1,7 @@
-package org.bntu.accounting.bntuaccountingsystem.builder;
+package org.bntu.accounting.bntuaccountingsystem.models.builder;
 
 import org.bntu.accounting.bntuaccountingsystem.models.Salary;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
-
-import javax.persistence.*;
 
 public class SalaryBuilder {
 
