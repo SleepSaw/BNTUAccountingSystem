@@ -7,14 +7,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import org.bntu.accounting.bntuaccountingsystem.file.excel.creators.JsonFileReader;
 import org.bntu.accounting.bntuaccountingsystem.models.builder.TeacherBuilder;
 import org.bntu.accounting.bntuaccountingsystem.dao.TeacherDAO;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class AddEmployeeController implements Initializable {
+public class AddEmployeeController extends BaseController implements Initializable  {
     private TeacherDAO teacherDAO;
     @FXML
     private TextField fioTextField;
@@ -39,38 +45,6 @@ public class AddEmployeeController implements Initializable {
     @FXML
     private ComboBox<String> tariffComboBox;
 
-    private void initPostComboBox(){
-        ObservableList<String> posts = FXCollections.observableArrayList("Учитель", "Прочее");
-        postComboBox.setItems(posts);
-        postComboBox.setValue("Учитель");
-    }
-    private void initSubjectComboBox(){
-        ObservableList<String> subjects = FXCollections.observableArrayList("Математика","Русский язык и литература","Фзика");
-        subjectComboBox.setItems(subjects);
-        subjectComboBox.setValue("Математика");
-    }
-    private void initQualificationComboBox(){
-        ObservableList<String> qualifications = FXCollections.observableArrayList("б/к", "1-я к.к.","2-я к.к.",
-                "в.к.к.", "уч.-методист");
-        qualificationComboBox.setItems(qualifications);
-        qualificationComboBox.setValue("б/к");
-    }
-    private void initExpComboBox(){
-        ObservableList<String> exps = FXCollections.observableArrayList("До 5 лет", "5-10 лет", "10-15 лет", "cв. 15 лет");
-        expComboBox.setItems(exps);
-        expComboBox.setValue("До 5 лет");
-    }
-    private void initSpecComboBox(){
-        ObservableList<String> specList = FXCollections.observableArrayList("Нет", "Молодой специалист", "Одарённый");
-        specComboBox.setItems(specList);
-        specComboBox.setValue("Нет");
-    }
-    private void initTariffComboBox(){
-        ObservableList<String> tariffs = FXCollections.observableArrayList("7", "8", "9", "10", "11");
-        tariffComboBox.setItems(tariffs);
-        tariffComboBox.setValue("7");
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         teacherDAO = new TeacherDAO();
@@ -83,11 +57,12 @@ public class AddEmployeeController implements Initializable {
             teacherDAO.saveTeacher(teacher);
             System.out.println("Teacher is saved");
         });
-        initPostComboBox();
-        initSubjectComboBox();
-        initQualificationComboBox();
-        initExpComboBox();
-        initSpecComboBox();
-        initTariffComboBox();
+        initComboBox(postComboBox,"posts","Учитель");
+        initComboBox(subjectComboBox,"subjects","Математика");
+        initComboBox(qualificationComboBox,"qualifications","в.к.к.");
+        initComboBox(specComboBox,"young_specialist","Нет");
+        initComboBox(tariffComboBox,"tariffs","7");
+        initComboBox(expComboBox,"experiences","До 5 лет");
+
     }
 }

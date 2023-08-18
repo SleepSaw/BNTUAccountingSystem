@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class JsonFileReader {
-    public static JSONObject readJsonFile(String jsonFilePath) {
+    public JSONObject readJsonFile(String jsonFilePath) {
         try {
             String content = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
             return new JSONObject(content);
@@ -17,7 +17,7 @@ public class JsonFileReader {
         }
         return null;
     }
-    public static String getValueFromJson(String key, JSONObject jsonData){
+    public Object getValueFromJson(String key, JSONObject jsonData){
         try {
             return jsonData.getString(key);
         } catch (JSONException e) {
@@ -25,4 +25,5 @@ public class JsonFileReader {
             return null;
         }
     }
+
 }

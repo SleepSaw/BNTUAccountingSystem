@@ -10,9 +10,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class ExcelLoadTableCreator extends ExcelFileCreator {
+    private final JsonFileReader reader = new JsonFileReader();
 
-    public static void createLoadTableColumns(String fileName, JSONObject jsonData, Workbook workbook) {
-        Sheet sheet = workbook.getSheet("Лист");
+    public void createLoadTableColumns(String fileName, JSONObject jsonData, Workbook workbook) {
+        Sheet sheet = workbook.getSheetAt(0);
 
         CellStyle columnsStyle = createCellStyle(workbook, createFont(workbook, "Times New Roman", 16, false));
         columnsStyle.setAlignment(HorizontalAlignment.CENTER);
@@ -56,14 +57,14 @@ public class ExcelLoadTableCreator extends ExcelFileCreator {
             throw new RuntimeException(ex);
         }
     }
-    private static void createMergeColumn(int fromRow, int toRow,int fromColumn, int toColumn,
+    private void createMergeColumn(int fromRow, int toRow,int fromColumn, int toColumn,
                                           String jsonKey, JSONObject jsonData,
                                           Sheet sheet, CellStyle style){
         for(int i = fromRow;i<=toRow;i++){
             Row row = sheet.getRow(i);
             for(int j = fromColumn;j<=toColumn;j++){
                 Cell cell = row.createCell(j);
-                cell.setCellValue(JsonFileReader.getValueFromJson(jsonKey,jsonData));
+                cell.setCellValue((String) reader.getValueFromJson(jsonKey,jsonData));
                 cell.setCellStyle(style);
             }
 

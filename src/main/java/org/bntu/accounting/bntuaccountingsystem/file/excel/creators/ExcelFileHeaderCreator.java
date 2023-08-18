@@ -11,12 +11,9 @@ import java.io.IOException;
         import java.nio.file.Paths;
 
 public class ExcelFileHeaderCreator extends ExcelFileCreator {
-    private final String jsonFilePath = "C:\\Users\\danii\\IdeaProjects\\BNTUAccountingSystem\\src\\main\\resources\\files\\excel_header.json";
-    private String fileName;
-    private Workbook workbook;
-
-    public static void writeDataToExcel(String fileName, JSONObject jsonData, Workbook workbook) {
-            Sheet sheet = workbook.createSheet("Лист");
+    private final JsonFileReader reader = new JsonFileReader();
+    public void writeDataToExcel(String fileName, JSONObject jsonData, Workbook workbook) {
+            Sheet sheet = workbook.getSheetAt(0);
 
             CellStyle headerStyle = createCellStyle(workbook,createFont(workbook,"Times New Roman",20,false));
             CellStyle headerStyleBold = createCellStyle(workbook,createFont(workbook,"Times New Roman",20,true));
@@ -39,7 +36,7 @@ public class ExcelFileHeaderCreator extends ExcelFileCreator {
 
             writeDataToCell(row0,5,"УТВЕРЖДАЮ",headerStyleBoldRight);
             writeDataToCell(row2,5,"__________________   " +
-                    JsonFileReader.getValueFromJson("main_person_name",jsonData),headerStyleBoldRight);
+                    (String) reader.getValueFromJson("main_person_name",jsonData),headerStyleBoldRight);
             writeDataToCell(row3,5,"\"_____ \"_______________2023год",headerStyleBoldRight);
             setAllColumnsWidth(sheet);
             // Сохранение в файл
@@ -51,7 +48,7 @@ public class ExcelFileHeaderCreator extends ExcelFileCreator {
             }
 
     }
-    private static void setAllColumnsWidth(Sheet sheet){
+    private void setAllColumnsWidth(Sheet sheet){
         setColumnWidth(0,60,sheet);
         setColumnWidth(1,290,sheet);
         setColumnWidth(2,200,sheet);

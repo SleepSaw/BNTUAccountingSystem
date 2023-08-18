@@ -80,7 +80,7 @@
                         <Insets right="25.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="172.0" text="Сохранить изменения" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="25.0" prefWidth="172.0" text="Сохранить изменения" />
                </children>
                <BorderPane.margin>
                   <Insets top="15.0" />
