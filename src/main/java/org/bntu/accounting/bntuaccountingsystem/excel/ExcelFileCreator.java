@@ -1,4 +1,4 @@
-package org.bntu.accounting.bntuaccountingsystem.file.excel.creators;
+package org.bntu.accounting.bntuaccountingsystem.excel;
 
 import org.apache.poi.ss.usermodel.*;
 import org.json.JSONObject;
@@ -29,7 +29,7 @@ public class ExcelFileCreator {
     protected void writeDataToCellFromJSON(Row row, int columnIndex,
                                                   String jsonKey, JSONObject jsonData, CellStyle style){
         Cell cell = row.createCell(columnIndex);
-        cell.setCellValue((String) reader.getValueFromJson(jsonKey,jsonData));
+        cell.setCellValue((String) jsonData.get(jsonKey));
         cell.setCellStyle(style);
     }
 }

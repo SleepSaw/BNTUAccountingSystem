@@ -1,10 +1,10 @@
-package org.bntu.accounting.bntuaccountingsystem.file.excel.creators;
+package org.bntu.accounting.bntuaccountingsystem.excel;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.bntu.accounting.bntuaccountingsystem.dao.TeacherDAO;
+import org.bntu.accounting.bntuaccountingsystem.excel.ExcelFileCreator;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
 
 import java.util.List;

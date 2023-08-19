@@ -1,4 +1,4 @@
-package org.bntu.accounting.bntuaccountingsystem.file.excel.creators;
+package org.bntu.accounting.bntuaccountingsystem.excel;
 
 import org.json.JSONException;
 import org.json.JSONObject;

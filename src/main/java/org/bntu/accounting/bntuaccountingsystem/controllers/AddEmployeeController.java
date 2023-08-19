@@ -1,23 +1,15 @@
 package org.bntu.accounting.bntuaccountingsystem.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import org.bntu.accounting.bntuaccountingsystem.file.excel.creators.JsonFileReader;
 import org.bntu.accounting.bntuaccountingsystem.models.builder.TeacherBuilder;
 import org.bntu.accounting.bntuaccountingsystem.dao.TeacherDAO;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddEmployeeController extends BaseController implements Initializable  {

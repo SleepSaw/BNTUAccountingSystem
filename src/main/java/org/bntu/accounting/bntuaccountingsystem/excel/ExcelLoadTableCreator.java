@@ -1,15 +1,14 @@
-package org.bntu.accounting.bntuaccountingsystem.file.excel.creators;
+package org.bntu.accounting.bntuaccountingsystem.excel;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class ExcelLoadTableCreator extends ExcelFileCreator {
+public class ExcelLoadTableCreator extends ExcelTableCreator {
     private final JsonFileReader reader = new JsonFileReader();
 
     public void createLoadTableColumns(String fileName, JSONObject jsonData, Workbook workbook) {
@@ -25,6 +24,7 @@ public class ExcelLoadTableCreator extends ExcelFileCreator {
         columnsStyle.setBorderRight(BorderStyle.THIN);
         CellStyle styleBold = createCellStyle(workbook, createFont(workbook, "Times New Roman", 20, true));
 
+        setAllColumnsWidth(sheet);
 
         Row row9 = sheet.createRow(9);
         Row row10 = sheet.createRow(10);
@@ -38,7 +38,7 @@ public class ExcelLoadTableCreator extends ExcelFileCreator {
 
 
         writeDataToCellFromJSON(row9, 0, "chapter_name", jsonData, styleBold);
-        createMergeColumn(10,12,0,0,"index_column",jsonData,sheet,columnsStyle);
+        createColumn(10,12,0,0,jsonData.getString("index_column"),columnsStyle,sheet);
         createMergeColumn(10,12,1,1,"fio_column",jsonData,sheet,columnsStyle);
         createMergeColumn(10,12,2,2,"post_column",jsonData,sheet,columnsStyle);
         createMergeColumn(10,12,3,3,"subject_column",jsonData,sheet,columnsStyle);
@@ -74,6 +74,21 @@ public class ExcelLoadTableCreator extends ExcelFileCreator {
         }
         CellRangeAddress mergedRegion = new CellRangeAddress(fromRow, toRow, fromColumn, toColumn);
         sheet.addMergedRegion(mergedRegion);
+    }
+    public void setAllColumnsWidth(Sheet sheet){
+        setColumnWidth(0,60,sheet);
+        setColumnWidth(1,290,sheet);
+        setColumnWidth(2,200,sheet);
+        setColumnWidth(3,500,sheet);
+        setColumnWidth(4,200,sheet);
+        setColumnWidth(5,200,sheet);
+        setColumnWidth(6,200,sheet);
+        setColumnWidth(7,200,sheet);
+    }
+
+    @Override
+    public int addOneTeacherToTable(Teacher teacher, Row row) {
+        return 0;
     }
 
 }

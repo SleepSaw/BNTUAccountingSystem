@@ -1,14 +1,9 @@
-package org.bntu.accounting.bntuaccountingsystem.file.excel.creators;
+package org.bntu.accounting.bntuaccountingsystem.excel;
 import org.apache.poi.ss.usermodel.*;
-        import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-        import java.nio.file.Files;
-        import java.nio.file.Paths;
 
 public class ExcelFileHeaderCreator extends ExcelFileCreator {
     private final JsonFileReader reader = new JsonFileReader();
@@ -36,9 +31,8 @@ public class ExcelFileHeaderCreator extends ExcelFileCreator {
 
             writeDataToCell(row0,5,"УТВЕРЖДАЮ",headerStyleBoldRight);
             writeDataToCell(row2,5,"__________________   " +
-                    (String) reader.getValueFromJson("main_person_name",jsonData),headerStyleBoldRight);
+                    (String) jsonData.get("main_person_name"),headerStyleBoldRight);
             writeDataToCell(row3,5,"\"_____ \"_______________2023год",headerStyleBoldRight);
-            setAllColumnsWidth(sheet);
             // Сохранение в файл
             try (FileOutputStream outputStream = new FileOutputStream(fileName)) {
                 workbook.write(outputStream);
@@ -48,15 +42,18 @@ public class ExcelFileHeaderCreator extends ExcelFileCreator {
             }
 
     }
-    private void setAllColumnsWidth(Sheet sheet){
-        setColumnWidth(0,60,sheet);
-        setColumnWidth(1,290,sheet);
-        setColumnWidth(2,200,sheet);
-        setColumnWidth(3,500,sheet);
-        setColumnWidth(4,200,sheet);
-        setColumnWidth(5,200,sheet);
-        setColumnWidth(6,200,sheet);
-        setColumnWidth(7,200,sheet);
+
+    // Вынести в создание колонок
+
+
+    public void createHeader(String fileName, JSONObject jsonData, Workbook workbook){
+        Sheet sheet = workbook.getSheetAt(0);
+
+        CellStyle headerStyle = createCellStyle(workbook,createFont(workbook,"Times New Roman",20,false));
+        CellStyle headerStyleBold = createCellStyle(workbook,createFont(workbook,"Times New Roman",20,true));
+        CellStyle headerStyleBoldRight = createCellStyle(workbook,createFont(workbook,"Times New Roman",24,true));
+
+
     }
 
 }
