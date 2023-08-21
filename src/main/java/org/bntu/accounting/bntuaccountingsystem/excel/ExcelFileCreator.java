@@ -6,11 +6,25 @@ import org.json.JSONObject;
 public class ExcelFileCreator {
     private JsonFileReader reader = new JsonFileReader();
 
+    protected Font createFont(Workbook workbook, String fontFamily, int fontSize){
+        Font font = workbook.createFont();
+        font.setFontName(fontFamily);
+        font.setFontHeightInPoints((short) fontSize);
+        return font;
+    }
     protected Font createFont(Workbook workbook, String fontFamily, int fontSize, boolean isBold){
         Font font = workbook.createFont();
         font.setFontName(fontFamily);
         font.setFontHeightInPoints((short) fontSize);
         font.setBold(isBold);
+        return font;
+    }
+    protected Font createFont(Workbook workbook, String fontFamily, int fontSize, boolean isBold, boolean isItalic){
+        Font font = workbook.createFont();
+        font.setFontName(fontFamily);
+        font.setFontHeightInPoints((short) fontSize);
+        font.setBold(isBold);
+        font.setItalic(isItalic);
         return font;
     }
     protected CellStyle createCellStyle(Workbook workbook, Font font){

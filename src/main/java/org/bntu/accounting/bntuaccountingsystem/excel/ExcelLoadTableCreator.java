@@ -10,8 +10,10 @@ import java.io.IOException;
 
 public class ExcelLoadTableCreator extends ExcelTableCreator {
     private final JsonFileReader reader = new JsonFileReader();
+    private Workbook workbook;
 
     public void createLoadTableColumns(String fileName, JSONObject jsonData, Workbook workbook) {
+        this.workbook = workbook;
         Sheet sheet = workbook.getSheetAt(0);
 
         CellStyle columnsStyle = createCellStyle(workbook, createFont(workbook, "Times New Roman", 16, false));
@@ -38,18 +40,19 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
 
 
         writeDataToCellFromJSON(row9, 0, "chapter_name", jsonData, styleBold);
-        createColumn(10,12,0,0,jsonData.getString("index_column"),columnsStyle,sheet);
-        createMergeColumn(10,12,1,1,"fio_column",jsonData,sheet,columnsStyle);
-        createMergeColumn(10,12,2,2,"post_column",jsonData,sheet,columnsStyle);
-        createMergeColumn(10,12,3,3,"subject_column",jsonData,sheet,columnsStyle);
 
-        createMergeColumn(10,10,4,7,"week_load_column",jsonData,sheet,columnsStyle);
-        createMergeColumn(11,11,5,7,"parts_load_column",jsonData,sheet,columnsStyle);
+        createColumn(10,12,0,0,jsonData.getString("index_column"),columnsStyle,workbook);
+        createColumn(10,12,1,1,jsonData.getString("fio_column"),columnsStyle,workbook);
+        createColumn(10,12,2,2,jsonData.getString("post_column"),columnsStyle,workbook);
+        createColumn(10,12,3,3,jsonData.getString("subject_column"),columnsStyle,workbook);
 
-        createMergeColumn(11,12,4,4,"total_load_column",jsonData,sheet,columnsStyle);
-        createMergeColumn(12,12,5,5,"academic_load_column",jsonData,sheet,columnsStyle);
-        createMergeColumn(12,12,6,6,"additional_load_column",jsonData,sheet,columnsStyle);
-        createMergeColumn(12,12,7,7,"organization_load_column",jsonData,sheet,columnsStyle);
+        createColumn(10,10,4,7,jsonData.getString("week_load_column"),columnsStyle,workbook);
+        createColumn(11,11,5,7,jsonData.getString("parts_load_column"),columnsStyle,workbook);
+
+        createColumn(11,12,4,4,jsonData.getString("total_load_column"),columnsStyle,workbook);
+        createColumn(12,12,5,5,jsonData.getString("academic_load_column"),columnsStyle,workbook);
+        createColumn(12,12,6,6,jsonData.getString("additional_load_column"),columnsStyle,workbook);
+        createColumn(12,12,7,7,jsonData.getString("organization_load_column"),columnsStyle,workbook);
 
         try (FileOutputStream outputStream = new FileOutputStream(fileName)) {
             workbook.write(outputStream);
@@ -76,10 +79,10 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
         sheet.addMergedRegion(mergedRegion);
     }
     public void setAllColumnsWidth(Sheet sheet){
-        setColumnWidth(0,60,sheet);
+        setColumnWidth(0,50,sheet);
         setColumnWidth(1,290,sheet);
         setColumnWidth(2,200,sheet);
-        setColumnWidth(3,500,sheet);
+        setColumnWidth(3,660,sheet);
         setColumnWidth(4,200,sheet);
         setColumnWidth(5,200,sheet);
         setColumnWidth(6,200,sheet);
@@ -87,8 +90,50 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
     }
 
     @Override
-    public int addOneTeacherToTable(Teacher teacher, Row row) {
-        return 0;
+    public void addOneTeacherToTable(int number,Teacher teacher, Row row) {
+        CellStyle styleAlignCenter = workbook.createCellStyle();
+        styleAlignCenter.cloneStyleFrom(columnStyle);
+        styleAlignCenter.setAlignment(HorizontalAlignment.CENTER);
+
+        CellStyle styleAlignLeft = workbook.createCellStyle();
+        styleAlignLeft.cloneStyleFrom(columnStyle);
+        styleAlignLeft.setAlignment(HorizontalAlignment.LEFT);
+
+        CellStyle styleAlignRight = workbook.createCellStyle();
+        styleAlignRight.cloneStyleFrom(columnStyle);
+        styleAlignRight.setAlignment(HorizontalAlignment.RIGHT);
+
+        Cell numberCell = row.createCell(0);
+        numberCell.setCellValue(number);
+        numberCell.setCellStyle(styleAlignCenter);
+
+        Cell fioCell = row.createCell(1);
+        fioCell.setCellValue(teacher.getName());
+        fioCell.setCellStyle(styleAlignLeft);
+
+        Cell postCell = row.createCell(2);
+        postCell.setCellValue(teacher.getPost());
+        postCell.setCellStyle(styleAlignLeft);
+
+        Cell subjectCell = row.createCell(3);
+        subjectCell.setCellValue(teacher.getSubject());
+        subjectCell.setCellStyle(styleAlignLeft);
+
+        Cell totalLoadCell = row.createCell(4);
+        totalLoadCell.setCellValue(teacher.getLoad().getTotalLoad());
+        totalLoadCell.setCellStyle(styleAlignRight);
+
+        Cell academicLoadCell = row.createCell(5);
+        academicLoadCell.setCellValue(teacher.getLoad().getAcademicLoad());
+        academicLoadCell.setCellStyle(styleAlignRight);
+
+        Cell addLoadCell = row.createCell(6);
+        addLoadCell.setCellValue(teacher.getLoad().getAddLoad());
+        addLoadCell.setCellStyle(styleAlignRight);
+
+        Cell orgLoadCell = row.createCell(7);
+        orgLoadCell.setCellValue(teacher.getLoad().getOrgLoad());
+        orgLoadCell.setCellStyle(styleAlignRight);
     }
 
 }

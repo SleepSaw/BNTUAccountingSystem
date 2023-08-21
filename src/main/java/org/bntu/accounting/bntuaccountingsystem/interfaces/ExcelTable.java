@@ -1,9 +1,6 @@
 package org.bntu.accounting.bntuaccountingsystem.interfaces;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
 import org.json.JSONObject;
 
@@ -20,10 +17,10 @@ public interface ExcelTable {
      * @param endColumn- индекс столбца, на котором колонка заканчивается
      * @param title - заголовок колонки
      * @param style - стиль колонки
-     * @param sheet - Excel лист, на котором колонка будет создаваться
+     * @param workbook - Excel документ, в котором колонка будет создаваться
      * */
     void createColumn(int startRow, int endRow, int startColumn, int endColumn,
-                      String title, CellStyle style, Sheet sheet);
+                      String title, CellStyle style, Workbook workbook);
 
     /**
      * Задаётся ширина ключевых столбцов таблицы
@@ -33,19 +30,20 @@ public interface ExcelTable {
 
     /**
      * Добавляет всех учителей из списка в Excel таблицу.
+     * @param startRow - индекс строки, с которой начнётся добавление учителей
      * @param teacherList - список учителей для добавления в таблицу
      * @param sheet - Excel лист
      * @return индекс строки, в которую был добавлен последний учитель
      * */
-    int addAllTeacherToTable(List<Teacher> teacherList, Sheet sheet);
+    int addAllTeacherToTable(int startRow, List<Teacher> teacherList, Sheet sheet);
 
     /**
      * Добавляет учителя в заданную строку.
+     * @param number - номер учителя в таблице
      * @param teacher - учитель
      * @param row - строка, в которую учитель будет добавляться
-     * @return индекс строки, в которую был добавлен учитель
      * */
-    int addOneTeacherToTable(Teacher teacher, Row row);
+    void addOneTeacherToTable(int number, Teacher teacher, Row row);
 
 
 

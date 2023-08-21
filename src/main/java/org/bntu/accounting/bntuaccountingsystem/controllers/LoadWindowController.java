@@ -163,8 +163,8 @@ public class LoadWindowController implements Initializable {
                 fileHeaderCreator.writeDataToExcel(file.getPath(),jsonHeader,workbook);
                 loadTableCreator.createLoadTableColumns(file.getPath(),jsonLoadTable,workbook);
                 List<Teacher> teachers = teacherDAO.findAllTeachers();
-                TeacherLoadWriter teacherLoadWriter = new TeacherLoadWriter();
-                teacherLoadWriter.writeAllTeachers(14,teacherList,workbook);
+                loadTableCreator.addAllTeacherToTable(14,teachers,sheet);
+                //teacherLoadWriter.writeAllTeachers(14,teacherList,workbook);
                 try (FileOutputStream outputStream = new FileOutputStream(file.getPath())) {
                     workbook.write(outputStream);
                 }
