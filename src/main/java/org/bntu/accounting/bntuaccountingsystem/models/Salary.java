@@ -1,5 +1,7 @@
 package org.bntu.accounting.bntuaccountingsystem.models;
 
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -7,7 +9,7 @@ import java.io.Serializable;
 @Table(name = "salary")
 public class Salary implements Serializable {
     @Id
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private Teacher teacher;
     @Column(name = "salary_rate")

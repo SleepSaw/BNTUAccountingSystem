@@ -113,7 +113,7 @@ public class CommonData {
         tariffsByCategory.put(10,1.79);
         tariffsByCategory.put(11,1.91);
 
-        experienceAllowances.put("До 5 лет",0.1);
+        experienceAllowances.put("до 5 лет",0.1);
         experienceAllowances.put("5-10 лет",0.15);
         experienceAllowances.put("10-15 лет",0.20);
         experienceAllowances.put("св. 15 лет",0.30);

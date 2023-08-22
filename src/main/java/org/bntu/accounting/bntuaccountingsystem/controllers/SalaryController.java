@@ -156,8 +156,7 @@ public class SalaryController  implements Initializable {
         File file = fileChooser.showSaveDialog(null);
         if (file != null) {
             SalaryFileCreator salaryFileCreator = new SalaryFileCreator();
-            List<Teacher> teachers = teacherDAO.findAllTeachers();
-            salaryFileCreator.createFile(file.getPath(),teachers);
+            salaryFileCreator.createFile(file.getPath(),teacherList);
         }
     }
     protected void setRowsIndexes(){

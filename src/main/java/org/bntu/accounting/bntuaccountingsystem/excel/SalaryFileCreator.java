@@ -12,7 +12,7 @@ import java.util.List;
 
 public class SalaryFileCreator {
     private final static String headerFilePath = "src\\main\\resources\\files\\excel_header.json";
-    private final static String loadTableFilePath = "src\\main\\resources\\files\\load_table.json";
+    private final static String salaryTableFilePath = "src\\main\\resources\\files\\salary_table.json";
     private JsonFileReader jsonFileReader;
     private ExcelFileHeaderCreator headerCreator;
     private ExcelSalaryTableCreator SalaryTableCreator;
@@ -22,10 +22,9 @@ public class SalaryFileCreator {
             Sheet sheet = workbook.createSheet("Педагогическая нагрузка");
             init();
             JSONObject headersData = jsonFileReader.readJsonFile(headerFilePath);
-            JSONObject loadTableData = jsonFileReader.readJsonFile(loadTableFilePath);
-            headerCreator.createHeader(headerFilePath,headersData,workbook);
-            headerCreator.writeDataToExcel(filePath,headersData,workbook);
-            SalaryTableCreator.createLoadTableColumns(filePath,loadTableData,workbook);
+            JSONObject salaryTableData = jsonFileReader.readJsonFile(salaryTableFilePath);
+            headerCreator.writeDataToExcel(filePath,12,headersData,workbook);
+            SalaryTableCreator.createLoadTableColumns(filePath,salaryTableData,workbook);
             int endRow = SalaryTableCreator.addAllTeacherToTable(14,teacherList,sheet);
             SalaryTableCreator.addCommonData(endRow, teacherList, workbook);
             try (FileOutputStream outputStream = new FileOutputStream(filePath)) {

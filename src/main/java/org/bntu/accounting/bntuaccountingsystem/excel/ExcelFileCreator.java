@@ -40,10 +40,4 @@ public class ExcelFileCreator {
         cell.setCellValue(value);
         cell.setCellStyle(style);
     }
-    protected void writeDataToCellFromJSON(Row row, int columnIndex,
-                                                  String jsonKey, JSONObject jsonData, CellStyle style){
-        Cell cell = row.createCell(columnIndex);
-        cell.setCellValue((String) jsonData.get(jsonKey));
-        cell.setCellStyle(style);
-    }
 }

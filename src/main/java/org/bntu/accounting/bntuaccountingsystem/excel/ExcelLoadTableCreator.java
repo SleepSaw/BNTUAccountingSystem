@@ -3,10 +3,12 @@ package org.bntu.accounting.bntuaccountingsystem.excel;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
+import org.bntu.accounting.bntuaccountingsystem.services.LoadService;
 import org.json.JSONObject;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class ExcelLoadTableCreator extends ExcelTableCreator {
     private final JsonFileReader reader = new JsonFileReader();
@@ -39,20 +41,20 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
 
 
 
-        writeDataToCellFromJSON(row9, 0, "chapter_name", jsonData, styleBold);
+        writeDataToCell(row9, 0,  jsonData.getString("chapter_name"), styleBold);
 
-        createColumn(10,12,0,0,jsonData.getString("index_column"),columnsStyle,workbook);
-        createColumn(10,12,1,1,jsonData.getString("fio_column"),columnsStyle,workbook);
-        createColumn(10,12,2,2,jsonData.getString("post_column"),columnsStyle,workbook);
-        createColumn(10,12,3,3,jsonData.getString("subject_column"),columnsStyle,workbook);
+        createColumn(10,12,0,0,jsonData.getString("index_column"),columnsStyle,workbook,false);
+        createColumn(10,12,1,1,jsonData.getString("fio_column"),columnsStyle,workbook,false);
+        createColumn(10,12,2,2,jsonData.getString("post_column"),columnsStyle,workbook,false);
+        createColumn(10,12,3,3,jsonData.getString("subject_column"),columnsStyle,workbook,false);
 
-        createColumn(10,10,4,7,jsonData.getString("week_load_column"),columnsStyle,workbook);
-        createColumn(11,11,5,7,jsonData.getString("parts_load_column"),columnsStyle,workbook);
+        createColumn(10,10,4,7,jsonData.getString("week_load_column"),columnsStyle,workbook,false);
+        createColumn(11,11,5,7,jsonData.getString("parts_load_column"),columnsStyle,workbook,false);
 
-        createColumn(11,12,4,4,jsonData.getString("total_load_column"),columnsStyle,workbook);
-        createColumn(12,12,5,5,jsonData.getString("academic_load_column"),columnsStyle,workbook);
-        createColumn(12,12,6,6,jsonData.getString("additional_load_column"),columnsStyle,workbook);
-        createColumn(12,12,7,7,jsonData.getString("organization_load_column"),columnsStyle,workbook);
+        createColumn(11,12,4,4,jsonData.getString("total_load_column"),columnsStyle,workbook,false);
+        createColumn(12,12,5,5,jsonData.getString("academic_load_column"),columnsStyle,workbook,false);
+        createColumn(12,12,6,6,jsonData.getString("additional_load_column"),columnsStyle,workbook,false);
+        createColumn(12,12,7,7,jsonData.getString("organization_load_column"),columnsStyle,workbook,false);
 
         try (FileOutputStream outputStream = new FileOutputStream(fileName)) {
             workbook.write(outputStream);
@@ -91,7 +93,34 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
     }
 
     @Override
-    public void addOneTeacherToTable(int number,Teacher teacher, Row row) {
+    public void addCommonData(int rowIndex, List<Teacher> teacherList, Workbook workbook) {
+        Sheet sheet = workbook.getSheetAt(0);
+        Row row = sheet.createRow(rowIndex);
+        CellStyle style = workbook.createCellStyle();
+        style.cloneStyleFrom(columnStyle);
+        Font font = createFont(workbook,"Times New Roman",16,true,false);
+        style.setFont(font);
+        style.setAlignment(HorizontalAlignment.LEFT);
+
+        LoadService service = new LoadService();
+        addCell(0,null,style,row);
+        addCell(1,"ИТОГО:",style,row);
+        addCell(2,null,style,row);
+        addCell(3,null,style,row);
+        style.setAlignment(HorizontalAlignment.RIGHT);
+        addCell(4,service.getTotalLoadOfAllTeachers(teacherList).toString(),style,row);
+        addCell(5,service.getAcademicLoadOfAllTeachers(teacherList).toString(),style,row);
+        addCell(6,service.getAddLoadOfAllTeachers(teacherList).toString(),style,row);
+        addCell(7,service.getOrgLoadOfAllTeachers(teacherList).toString(),style,row);
+    }
+    private void addCell(int cellIndex, String value, CellStyle style, Row row){
+        Cell cell = row.createCell(cellIndex);
+        cell.setCellValue(value);
+        cell.setCellStyle(style);
+    }
+
+    @Override
+    public void addOneTeacherToTable(Integer number,Teacher teacher, Row row) {
         CellStyle styleAlignCenter = workbook.createCellStyle();
         styleAlignCenter.cloneStyleFrom(columnStyle);
         styleAlignCenter.setAlignment(HorizontalAlignment.CENTER);

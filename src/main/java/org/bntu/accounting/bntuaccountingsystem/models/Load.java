@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Table(name = "load")
 public class Load implements Serializable {
     @Id
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private Teacher teacher;
     @Column(name = "academic_load")

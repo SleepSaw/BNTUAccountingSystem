@@ -20,7 +20,7 @@ public interface ExcelTable {
      * @param workbook - Excel документ, в котором колонка будет создаваться
      * */
     void createColumn(int startRow, int endRow, int startColumn, int endColumn,
-                      String title, CellStyle style, Workbook workbook);
+                      String title, CellStyle style, Workbook workbook , boolean rotate);
 
     /**
      * Задаётся ширина ключевых столбцов таблицы
@@ -43,7 +43,7 @@ public interface ExcelTable {
      * @param teacher - учитель
      * @param row - строка, в которую учитель будет добавляться
      * */
-    void addOneTeacherToTable(int number, Teacher teacher, Row row);
+    void addOneTeacherToTable(Integer number, Teacher teacher, Row row);
 
 
 

@@ -5,6 +5,8 @@ import org.bntu.accounting.bntuaccountingsystem.models.Load;
 import org.bntu.accounting.bntuaccountingsystem.models.Salary;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
 
+import java.util.List;
+
 public class SalaryService {
     private Salary salary;
     private Teacher teacher;
@@ -19,28 +21,28 @@ public class SalaryService {
         baseRate = commonData.getBaseRate();
     }
     // Оклад с учётом разряда (Минимальный)
-    public double findSalaryByEmployeesCategory(int category) {
+    public Double findSalaryByEmployeesCategory(int category) {
         return baseRate * commonData.getTariffByCategory(category);
     }
     // Оклад с учётом нагрузки (Фактический)
-    public double findSalaryByEmployeesLoad(Load load) {
+    public Double findSalaryByEmployeesLoad(Load load) {
         return salary.getSalaryPerRate() * load.getTotalLoad() / 20;
     }
 
     // Размер надбавки за стаж работы (в у.е.) Зависит от БАЗОВОЙ СТАВКИ
-    public double findExperienceAllowance(String experience) {
+    public Double findExperienceAllowance(String experience) {
         return baseRate * teacher.getLoad().getTotalLoad()/20 * commonData.getAllowanceByExperience(experience);
     }
     // Размер надбавки за работу в отрасли (в у.е.) Зависит от ОКЛАДА С УЧ. НАГРУЗКИ
-    public double findIndustryWorkAllowance(double salary){
+    public Double findIndustryWorkAllowance(double salary){
         return salary * commonData.getIndustryAllowance();
     }
     // Размер надбавки за специфику работы (в у.е.) Зависит от ОКЛАДА С УЧ. НАГРУЗКИ
-    public double findAllowanceByQualification(String qualification){
+    public Double findAllowanceByQualification(String qualification){
         return salary.getSalaryByLoad() * commonData.getAllowanceByQualification(qualification);
     }
     // Размер надбавки молодого специалиста (в у.е.) Зависит от ОКЛАДА С УЧ. НАГРУЗКИ
-    public double findSYAllowance( String specialistType){
+    public Double findSYAllowance( String specialistType){
         return salary.getSalaryByLoad() * commonData.getYSAllowances(specialistType);
     }
     public Salary findCommonSalaryOfTeacher(Teacher selectedTeacher){
@@ -59,5 +61,72 @@ public class SalaryService {
         salary.setTotalSalary(totalSalary);
         return salary;
     }
-
+    public Double getTotalSalaryOfAllTeachers(List<Teacher> teachers){
+        double result =0;
+        for (Teacher teacher: teachers) {
+            result += teacher.getSalary().getTotalSalary();
+        }
+        return roundValue(result);
+    }
+    public Double getSalaryPerRateOfAllTeachers(List<Teacher> teachers){
+        double result =0;
+        for (Teacher teacher: teachers) {
+            result += teacher.getSalary().getSalaryPerRate();
+        }
+        return roundValue(result);
+    }
+    public Double getSalaryByLoadOfAllTeachers(List<Teacher> teachers){
+        double result =0;
+        for (Teacher teacher: teachers) {
+            result += teacher.getSalary().getSalaryByLoad();
+        }
+        return roundValue(result);
+    }
+    public Double getExpAllowanceOfAllTeachers(List<Teacher> teachers){
+        double result =0;
+        for (Teacher teacher: teachers) {
+            result += teacher.getSalary().getExpAllowance();
+        }
+        return roundValue(result);
+    }
+    public Double getContractAllowanceOfAllTeachers(List<Teacher> teachers){
+        double result =0;
+        for (Teacher teacher: teachers) {
+            result += teacher.getSalary().getContractAllowance();
+        }
+        return roundValue(result);
+    }
+    public Double getQualAllowanceOfAllTeachers(List<Teacher> teachers){
+        double result =0;
+        for (Teacher teacher: teachers) {
+            result += teacher.getSalary().getQualificationAllowance();
+        }
+        return roundValue(result);
+    }
+    public Double getYoungSpecAllowanceOfAllTeachers(List<Teacher> teachers){
+        double result =0;
+        for (Teacher teacher: teachers) {
+            result += teacher.getSalary().getYoungSpecialistAllowance();
+        }
+        return roundValue(result);
+    }
+    public Double getSixPercentAllowanceOfAllTeachers(List<Teacher> teachers){
+        double result =0;
+        for (Teacher teacher: teachers) {
+            result += teacher.getSalary().getSixPercent();
+        }
+        return roundValue(result);
+    }
+    public Double getAdditionalAllowanceOfAllTeachers(List<Teacher> teachers){
+        double result =0;
+        for (Teacher teacher: teachers) {
+            result += teacher.getSalary().getAdditionalAllowance();
+        }
+        return roundValue(result);
+    }
+    private double roundValue(double value){
+        double result = Math.round(value * 100);
+        result = result/100;
+        return result;
+    }
 }
