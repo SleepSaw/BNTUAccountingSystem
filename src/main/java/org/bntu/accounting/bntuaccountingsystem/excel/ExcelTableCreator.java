@@ -4,6 +4,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.bntu.accounting.bntuaccountingsystem.interfaces.ExcelTable;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
+import org.bntu.accounting.bntuaccountingsystem.services.LoadService;
 
 import java.util.List;
 
@@ -64,6 +65,32 @@ public abstract class ExcelTableCreator extends ExcelFileCreator implements Exce
             count++;
         }
         return i;
+    }
+    public void addCommonData(int rowIndex, List<Teacher> teacherList, Workbook workbook){
+        Sheet sheet = workbook.getSheetAt(0);
+        Row row = sheet.createRow(rowIndex);
+        CellStyle style = workbook.createCellStyle();
+        style.cloneStyleFrom(columnStyle);
+        Font font = createFont(workbook,"Times New Roman",16,true,false);
+        style.setFont(font);
+        style.setAlignment(HorizontalAlignment.LEFT);
+
+        LoadService service = new LoadService();
+        addCell(0,null,style,row);
+        addCell(1,"ИТОГО:",style,row);
+        addCell(2,null,style,row);
+        addCell(3,null,style,row);
+        style.setAlignment(HorizontalAlignment.RIGHT);
+        addCell(4,service.getTotalLoadOfAllTeachers(teacherList).toString(),style,row);
+        addCell(5,service.getAcademicLoadOfAllTeachers(teacherList).toString(),style,row);
+        addCell(6,service.getAddLoadOfAllTeachers(teacherList).toString(),style,row);
+        addCell(7,service.getOrgLoadOfAllTeachers(teacherList).toString(),style,row);
+
+    }
+    private void addCell(int cellIndex, String value, CellStyle style, Row row){
+        Cell cell = row.createCell(cellIndex);
+        cell.setCellValue(value);
+        cell.setCellStyle(style);
     }
 
     // Асбтрактный метод, который необходимо переопределить для добавления одного учителя

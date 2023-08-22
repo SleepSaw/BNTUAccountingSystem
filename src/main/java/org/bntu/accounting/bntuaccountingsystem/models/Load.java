@@ -30,7 +30,7 @@ public class Load implements Serializable {
     }
 
     public double getAcademicLoad() {
-        return academicLoad;
+        return roundValue(academicLoad);
     }
 
     public void setAcademicLoad(double academicLoad) {
@@ -38,7 +38,7 @@ public class Load implements Serializable {
     }
 
     public double getOrgLoad() {
-        return orgLoad;
+        return roundValue(orgLoad);
     }
 
     public void setOrgLoad(double orgLoad) {
@@ -46,7 +46,7 @@ public class Load implements Serializable {
     }
 
     public double getAddLoad() {
-        return addLoad;
+        return roundValue(addLoad);
     }
 
     public void setAddLoad(double addLoad) {
@@ -55,7 +55,7 @@ public class Load implements Serializable {
 
     public double getTotalLoad() {
         totalLoad = academicLoad + addLoad + orgLoad;
-        return totalLoad;
+        return roundValue(totalLoad);
     }
 
     public void setTotalLoad(double totalLoad) {
@@ -79,5 +79,10 @@ public class Load implements Serializable {
                 ", totalLoad=" + totalLoad + "\n" +
                 ", teacher=" + teacher +
                 '}';
+    }
+    private double roundValue(double value){
+        double result = Math.round(value * 100);
+        result = result/100;
+        return result;
     }
 }

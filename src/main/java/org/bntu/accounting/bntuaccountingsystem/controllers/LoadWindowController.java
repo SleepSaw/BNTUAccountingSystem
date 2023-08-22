@@ -13,20 +13,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.bntu.accounting.bntuaccountingsystem.dao.TeacherDAO;
-import org.bntu.accounting.bntuaccountingsystem.excel.ExcelFileHeaderCreator;
-import org.bntu.accounting.bntuaccountingsystem.excel.ExcelLoadTableCreator;
-import org.bntu.accounting.bntuaccountingsystem.excel.JsonFileReader;
-import org.bntu.accounting.bntuaccountingsystem.excel.TeacherLoadWriter;
+import org.bntu.accounting.bntuaccountingsystem.excel.*;
 import org.bntu.accounting.bntuaccountingsystem.models.Load;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
-import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -36,11 +28,6 @@ import java.util.ResourceBundle;
 public class LoadWindowController implements Initializable {
     private ObservableList<Teacher> teacherList;
     private TeacherDAO teacherDAO;
-
-    private final ExcelFileHeaderCreator fileHeaderCreator = new ExcelFileHeaderCreator();
-
-    private final ExcelLoadTableCreator loadTableCreator = new ExcelLoadTableCreator();
-    private final JsonFileReader fileReader = new JsonFileReader();
     @FXML
     private Button saveButton;
     @FXML
@@ -150,29 +137,13 @@ public class LoadWindowController implements Initializable {
     }
     @FXML
     void saveButtonAction(ActionEvent event) throws IOException {
-        String jsonLoadTableFilePath = "C:\\Users\\danii\\IdeaProjects\\BNTUAccountingSystem\\src\\main\\resources\\files\\load_table.json";
-        String jsonHeaderFilePath = "C:\\Users\\danii\\IdeaProjects\\BNTUAccountingSystem\\src\\main\\resources\\files\\excel_header.json";
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
         File file = fileChooser.showSaveDialog(null);
         if (file != null) {
-            try (Workbook workbook = new XSSFWorkbook()) {
-                Sheet sheet = workbook.createSheet("Лист");
-                JSONObject jsonHeader = fileReader.readJsonFile(jsonHeaderFilePath);
-                JSONObject jsonLoadTable = fileReader.readJsonFile(jsonLoadTableFilePath);
-                fileHeaderCreator.writeDataToExcel(file.getPath(),jsonHeader,workbook);
-                loadTableCreator.createLoadTableColumns(file.getPath(),jsonLoadTable,workbook);
-                List<Teacher> teachers = teacherDAO.findAllTeachers();
-                loadTableCreator.addAllTeacherToTable(14,teachers,sheet);
-                //teacherLoadWriter.writeAllTeachers(14,teacherList,workbook);
-                try (FileOutputStream outputStream = new FileOutputStream(file.getPath())) {
-                    workbook.write(outputStream);
-                }
-            }
-
-            catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            LoadFileCreator loadFileCreator = new LoadFileCreator();
+            List<Teacher> teachers = teacherDAO.findAllTeachers();
+            loadFileCreator.createFile(file.getPath(),teachers);
         }
     }
 

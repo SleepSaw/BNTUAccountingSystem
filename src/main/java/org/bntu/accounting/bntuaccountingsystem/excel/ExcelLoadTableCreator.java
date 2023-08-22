@@ -60,6 +60,7 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
             throw new RuntimeException(ex);
         }
     }
+
     private void createMergeColumn(int fromRow, int toRow,int fromColumn, int toColumn,
                                           String jsonKey, JSONObject jsonData,
                                           Sheet sheet, CellStyle style){
