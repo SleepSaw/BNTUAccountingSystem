@@ -4,15 +4,19 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import org.bntu.accounting.bntuaccountingsystem.dao.LoadDAO;
 import org.bntu.accounting.bntuaccountingsystem.dao.TeacherDAO;
+import org.bntu.accounting.bntuaccountingsystem.excel.LoadFileCreator;
+import org.bntu.accounting.bntuaccountingsystem.excel.SalaryFileCreator;
 import org.bntu.accounting.bntuaccountingsystem.models.CommonData;
 import org.bntu.accounting.bntuaccountingsystem.models.Load;
 import org.bntu.accounting.bntuaccountingsystem.models.Salary;
@@ -20,6 +24,7 @@ import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
 import org.bntu.accounting.bntuaccountingsystem.services.LoadService;
 import org.bntu.accounting.bntuaccountingsystem.services.SalaryService;
 
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
@@ -143,6 +148,17 @@ public class SalaryController  implements Initializable {
         totalSalaryColumn.setCellValueFactory(data -> new SimpleStringProperty(Double.toString(data.getValue().getSalary().getTotalSalary())));
         addTeachersToTable();
         setRowsIndexes();
+    }
+    @FXML
+    void saveButtonAction(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Excel Files", "*.xlsx"));
+        File file = fileChooser.showSaveDialog(null);
+        if (file != null) {
+            SalaryFileCreator salaryFileCreator = new SalaryFileCreator();
+            List<Teacher> teachers = teacherDAO.findAllTeachers();
+            salaryFileCreator.createFile(file.getPath(),teachers);
+        }
     }
     protected void setRowsIndexes(){
         indexColumn.setCellFactory(new Callback<>() {
