@@ -17,25 +17,22 @@ public interface ExcelTable {
      * @param endColumn- индекс столбца, на котором колонка заканчивается
      * @param title - заголовок колонки
      * @param style - стиль колонки
-     * @param workbook - Excel документ, в котором колонка будет создаваться
      * */
     void createColumn(int startRow, int endRow, int startColumn, int endColumn,
-                      String title, CellStyle style, Workbook workbook , boolean rotate);
+                      String title, CellStyle style, boolean rotate);
 
     /**
      * Задаётся ширина ключевых столбцов таблицы
-     * @param sheet - Excel лист
      * */
-    void setAllColumnsWidth(Sheet sheet);
+    void setAllColumnsWidth();
 
     /**
      * Добавляет всех учителей из списка в Excel таблицу.
      * @param startRow - индекс строки, с которой начнётся добавление учителей
      * @param teacherList - список учителей для добавления в таблицу
-     * @param sheet - Excel лист
      * @return индекс строки, в которую был добавлен последний учитель
      * */
-    int addAllTeacherToTable(int startRow, List<Teacher> teacherList, Sheet sheet);
+    int addAllTeacherToTable(int startRow, List<Teacher> teacherList);
 
     /**
      * Добавляет учителя в заданную строку.

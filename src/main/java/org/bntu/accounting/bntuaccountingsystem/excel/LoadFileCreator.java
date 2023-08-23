@@ -16,17 +16,19 @@ public class LoadFileCreator {
     private JsonFileReader jsonFileReader;
     private ExcelFileHeaderCreator headerCreator;
     private ExcelLoadTableCreator loadTableCreator;
+    private Workbook workbook;
 
     public void createFile(String filePath, List<Teacher> teacherList){
         try(Workbook workbook = new XSSFWorkbook()){
+            this.workbook = workbook;
             Sheet sheet = workbook.createSheet("Педагогическая нагрузка");
             init();
             JSONObject headersData = jsonFileReader.readJsonFile(headerFilePath);
             JSONObject loadTableData = jsonFileReader.readJsonFile(loadTableFilePath);
             headerCreator.writeDataToExcel(filePath,5,headersData,workbook);
-            loadTableCreator.createLoadTableColumns(filePath,loadTableData,workbook);
-            int endRow = loadTableCreator.addAllTeacherToTable(14,teacherList,sheet);
-            loadTableCreator.addCommonData(endRow, teacherList, workbook);
+            loadTableCreator.createLoadTableColumns(filePath,loadTableData);
+            int endRow = loadTableCreator.addAllTeacherToTable(14,teacherList);
+            loadTableCreator.addCommonData(endRow, teacherList);
             try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
                 workbook.write(outputStream);
             }
@@ -35,8 +37,8 @@ public class LoadFileCreator {
         }
     }
     private void init(){
-        headerCreator = new ExcelFileHeaderCreator();
-        loadTableCreator = new ExcelLoadTableCreator();
+        headerCreator = new ExcelFileHeaderCreator(workbook);
+        loadTableCreator = new ExcelLoadTableCreator(workbook);
         jsonFileReader = new JsonFileReader();
     }
 

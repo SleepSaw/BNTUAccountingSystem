@@ -12,9 +12,14 @@ public abstract class ExcelTableCreator extends ExcelFileCreator implements Exce
     protected CellStyle columnStyle;
     private Integer counter =0;
 
+    public ExcelTableCreator(Workbook workbook) {
+        super(workbook);
+    }
+
+
     @Override
     public void createColumn(int startRow, int endRow, int startColumn, int endColumn, String title, CellStyle style,
-                             Workbook workbook, boolean rotate) {
+                             boolean rotate) {
         Sheet sheet = workbook.getSheetAt(0);
         CellStyle columnStyle = workbook.createCellStyle();
         this.columnStyle = workbook.createCellStyle();
@@ -41,13 +46,13 @@ public abstract class ExcelTableCreator extends ExcelFileCreator implements Exce
         if(startColumn == endColumn){
             row = sheet.getRow(endRow+1);
             counter++;
-            indexingColumn(row,startColumn,counter.toString(),workbook);
+            indexingColumn(row,startColumn,counter.toString());
         }
     }
-    private void indexingColumn(Row row, int columnIndex,String value, Workbook workbook){
+    private void indexingColumn(Row row, int columnIndex,String value){
         Cell cell = row.createCell(columnIndex);
-        Font font = createFont(workbook,"Times New Roman",12,false,true);
-        CellStyle style = createCellStyle(workbook,font);
+        Font font = createFont("Times New Roman",12,false,true);
+        CellStyle style = createCellStyle(font);
         style.cloneStyleFrom(columnStyle);
         style.setFont(font);
         style.setRotation((short) 0);
@@ -56,11 +61,11 @@ public abstract class ExcelTableCreator extends ExcelFileCreator implements Exce
     }
 
     @Override
-    public abstract void setAllColumnsWidth(Sheet sheet);
+    public abstract void setAllColumnsWidth();
 
     // Реализация добавления учителей в таблицу
     @Override
-    public int addAllTeacherToTable(int startRow,List<Teacher> teacherList, Sheet sheet) {
+    public int addAllTeacherToTable(int startRow,List<Teacher> teacherList) {
         int i = startRow;
         int count = 1;
         for (Teacher t: teacherList) {
@@ -71,7 +76,7 @@ public abstract class ExcelTableCreator extends ExcelFileCreator implements Exce
         }
         return i;
     }
-    public abstract void addCommonData(int rowIndex, List<Teacher> teacherList, Workbook workbook);
+    public abstract void addCommonData(int rowIndex, List<Teacher> teacherList);
 
     // Асбтрактный метод, который необходимо переопределить для добавления одного учителя
     @Override

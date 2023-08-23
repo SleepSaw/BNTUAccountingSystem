@@ -8,13 +8,16 @@ import java.io.IOException;
 
 public class ExcelFileHeaderCreator extends ExcelFileCreator {
     private final JsonFileReader reader = new JsonFileReader();
+    public ExcelFileHeaderCreator(Workbook workbook) {
+        super(workbook);
+    }
 
-    public void writeDataToExcel(String fileName,int marginLeftIndexColumn, JSONObject jsonData, Workbook workbook) {
+    public void writeDataToExcel(String fileName, int marginLeftIndexColumn, JSONObject jsonData, Workbook workbook) {
         Sheet sheet = workbook.getSheetAt(0);
 
-        CellStyle headerStyle = createCellStyle(workbook, createFont(workbook, "Times New Roman", 20, false));
-        CellStyle headerStyleBold = createCellStyle(workbook, createFont(workbook, "Times New Roman", 20, true));
-        CellStyle headerStyleBoldRight = createCellStyle(workbook, createFont(workbook, "Times New Roman", 24, true));
+        CellStyle headerStyle = createCellStyle(createFont("Times New Roman", 20, false));
+        CellStyle headerStyleBold = createCellStyle(createFont("Times New Roman", 20, true));
+        CellStyle headerStyleBoldRight = createCellStyle(createFont("Times New Roman", 24, true));
 
         Row row0 = sheet.createRow(0);
         Row row1 = sheet.createRow(1);

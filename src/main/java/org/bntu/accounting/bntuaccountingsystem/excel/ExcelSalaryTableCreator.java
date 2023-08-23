@@ -13,13 +13,14 @@ import java.util.List;
 
 public class ExcelSalaryTableCreator extends ExcelTableCreator  {
     private final JsonFileReader reader = new JsonFileReader();
-    private Workbook workbook;
 
-    public void createLoadTableColumns(String fileName, JSONObject jsonData, Workbook workbook) {
-        this.workbook = workbook;
-        Sheet sheet = workbook.getSheetAt(0);
+    public ExcelSalaryTableCreator(Workbook workbook) {
+        super(workbook);
+    }
 
-        CellStyle columnsStyle = createCellStyle(workbook, createFont(workbook, "Times New Roman", 16, false));
+    public void createLoadTableColumns(String fileName, JSONObject jsonData) {
+
+        CellStyle columnsStyle = createCellStyle(createFont("Times New Roman", 16, false));
         columnsStyle.setAlignment(HorizontalAlignment.CENTER);
         columnsStyle.setWrapText(true);
         columnsStyle.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -27,9 +28,9 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
         columnsStyle.setBorderBottom(BorderStyle.THIN);
         columnsStyle.setBorderLeft(BorderStyle.THIN);
         columnsStyle.setBorderRight(BorderStyle.THIN);
-        CellStyle styleBold = createCellStyle(workbook, createFont(workbook, "Times New Roman", 20, true));
+        CellStyle styleBold = createCellStyle(createFont("Times New Roman", 20, true));
 
-        setAllColumnsWidth(sheet);
+        setAllColumnsWidth();
 
         Row row8 = sheet.createRow(8);
         row8.setHeightInPoints(30);
@@ -48,31 +49,31 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
         writeDataToCell(row8, 0, jsonData.getString("chapter_name_part1"), styleBold);
         writeDataToCell(row9, 0, jsonData.getString("chapter_name_part2"), styleBold);
 
-        createColumn(10,12,0,0,jsonData.getString("index_column"),columnsStyle,workbook,false);
-        createColumn(10,12,1,1,jsonData.getString("fio_column"),columnsStyle,workbook,false);
-        createColumn(10,12,2,2,jsonData.getString("post_column"),columnsStyle,workbook,false);
-        createColumn(10,12,3,3,jsonData.getString("total_load_column"),columnsStyle,workbook,true);
-        createColumn(10,12,4,4,jsonData.getString("qualification_column"),columnsStyle,workbook,true);
-        createColumn(10,12,5,5,jsonData.getString("exp_column"),columnsStyle,workbook,true);
-        createColumn(10,12,6,6,jsonData.getString("category_column"),columnsStyle,workbook,true);
+        createColumn(10,12,0,0,jsonData.getString("index_column"),columnsStyle,false);
+        createColumn(10,12,1,1,jsonData.getString("fio_column"),columnsStyle,false);
+        createColumn(10,12,2,2,jsonData.getString("post_column"),columnsStyle,false);
+        createColumn(10,12,3,3,jsonData.getString("total_load_column"),columnsStyle,true);
+        createColumn(10,12,4,4,jsonData.getString("qualification_column"),columnsStyle,true);
+        createColumn(10,12,5,5,jsonData.getString("exp_column"),columnsStyle,true);
+        createColumn(10,12,6,6,jsonData.getString("category_column"),columnsStyle,true);
 
 
-        createColumn(10,12,7,7,jsonData.getString("salary_per_rate_column"),columnsStyle,workbook,true);
-        createColumn(10,12,8,8,jsonData.getString("salary_by_load_column"),columnsStyle,workbook,true);
+        createColumn(10,12,7,7,jsonData.getString("salary_per_rate_column"),columnsStyle,true);
+        createColumn(10,12,8,8,jsonData.getString("salary_by_load_column"),columnsStyle,true);
 
-        createColumn(10,10,9,15,jsonData.getString("allowances_by_load_column"),columnsStyle,workbook,false);
+        createColumn(10,10,9,15,jsonData.getString("allowances_by_load_column"),columnsStyle,false);
 
-        createColumn(11,12,9,9,jsonData.getString("exp_allowance_column"),columnsStyle,workbook,true);
-        createColumn(11,12,10,10,jsonData.getString("contract_allowance_column"),columnsStyle,workbook,true);
-        createColumn(11,12,11,11,jsonData.getString("village_allowance_column"),columnsStyle,workbook,true);
-        createColumn(11,12,12,12,jsonData.getString("qual_allowance_column"),columnsStyle,workbook,true);
-        createColumn(11,12,13,13,jsonData.getString("young_specialist_allowance_column"),columnsStyle,workbook,true);
-        createColumn(11,12,14,14,jsonData.getString("six_percent_allowance_column"),columnsStyle,workbook,true);
-        createColumn(11,12,15,15,jsonData.getString("osobennosti_allowance_column"),columnsStyle,workbook,true);
+        createColumn(11,12,9,9,jsonData.getString("exp_allowance_column"),columnsStyle,true);
+        createColumn(11,12,10,10,jsonData.getString("contract_allowance_column"),columnsStyle,true);
+        createColumn(11,12,11,11,jsonData.getString("village_allowance_column"),columnsStyle,true);
+        createColumn(11,12,12,12,jsonData.getString("qual_allowance_column"),columnsStyle,true);
+        createColumn(11,12,13,13,jsonData.getString("young_specialist_allowance_column"),columnsStyle,true);
+        createColumn(11,12,14,14,jsonData.getString("six_percent_allowance_column"),columnsStyle,true);
+        createColumn(11,12,15,15,jsonData.getString("osobennosti_allowance_column"),columnsStyle,true);
 
-        createColumn(10,12,16,16,jsonData.getString("osobennosti_per_rate_allowance_column"),columnsStyle,workbook,true);
-        createColumn(10,12,17,17,jsonData.getString("also_allowance_column"),columnsStyle,workbook,true);
-        createColumn(10,12,18,18,jsonData.getString("total_salary_column"),columnsStyle,workbook,true);
+        createColumn(10,12,16,16,jsonData.getString("osobennosti_per_rate_allowance_column"),columnsStyle,true);
+        createColumn(10,12,17,17,jsonData.getString("also_allowance_column"),columnsStyle,true);
+        createColumn(10,12,18,18,jsonData.getString("total_salary_column"),columnsStyle,true);
 
 
 
@@ -82,26 +83,7 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
             throw new RuntimeException(ex);
         }
     }
-
-    private void createMergeColumn(int fromRow, int toRow,int fromColumn, int toColumn,
-                                   String jsonKey, JSONObject jsonData,
-                                   Sheet sheet, CellStyle style){
-        for(int i = fromRow;i<=toRow;i++){
-            Row row = sheet.getRow(i);
-            for(int j = fromColumn;j<=toColumn;j++){
-                Cell cell = row.createCell(j);
-                cell.setCellValue((String) reader.getValueFromJson(jsonKey,jsonData));
-                cell.setCellStyle(style);
-            }
-
-        }
-        if(fromRow == toRow && fromColumn == toColumn){
-            return;
-        }
-        CellRangeAddress mergedRegion = new CellRangeAddress(fromRow, toRow, fromColumn, toColumn);
-        sheet.addMergedRegion(mergedRegion);
-    }
-    public void setAllColumnsWidth(Sheet sheet){
+    public void setAllColumnsWidth(){
         setColumnWidth(0,50,sheet);
         setColumnWidth(1,290,sheet);
         setColumnWidth(2,200,sheet);
@@ -120,16 +102,15 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
         setColumnWidth(15,80,sheet);
         setColumnWidth(16,90,sheet);
         setColumnWidth(17,90,sheet);
-        setColumnWidth(18,100,sheet);
+        setColumnWidth(18,120,sheet);
     }
 
     @Override
-    public void addCommonData(int rowIndex, List<Teacher> teacherList, Workbook workbook) {
-        Sheet sheet = workbook.getSheetAt(0);
+    public void addCommonData(int rowIndex, List<Teacher> teacherList) {
         Row row = sheet.createRow(rowIndex);
         CellStyle style = workbook.createCellStyle();
         style.cloneStyleFrom(columnStyle);
-        Font font = createFont(workbook,"Times New Roman",16,true,false);
+        Font font = createFont("Times New Roman",16,true,false);
         style.setFont(font);
         style.setAlignment(HorizontalAlignment.LEFT);
 
@@ -165,7 +146,7 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
     @Override
     public void addOneTeacherToTable(Integer number, Teacher teacher, Row row) {
         row.setHeightInPoints(20);
-        CellStyle columnsStyle = createCellStyle(workbook, createFont(workbook, "Times New Roman", 16, false));
+        CellStyle columnsStyle = createCellStyle(createFont("Times New Roman", 16, false));
         columnsStyle.setAlignment(HorizontalAlignment.CENTER);
         columnsStyle.setWrapText(true);
         columnsStyle.setVerticalAlignment(VerticalAlignment.CENTER);

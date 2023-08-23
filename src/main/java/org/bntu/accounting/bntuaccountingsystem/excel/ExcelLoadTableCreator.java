@@ -12,13 +12,14 @@ import java.util.List;
 
 public class ExcelLoadTableCreator extends ExcelTableCreator {
     private final JsonFileReader reader = new JsonFileReader();
-    private Workbook workbook;
 
-    public void createLoadTableColumns(String fileName, JSONObject jsonData, Workbook workbook) {
-        this.workbook = workbook;
-        Sheet sheet = workbook.getSheetAt(0);
+    public ExcelLoadTableCreator(Workbook workbook) {
+        super(workbook);
+    }
 
-        CellStyle columnsStyle = createCellStyle(workbook, createFont(workbook, "Times New Roman", 16, false));
+    public void createLoadTableColumns(String fileName, JSONObject jsonData) {
+
+        CellStyle columnsStyle = createCellStyle(createFont("Times New Roman", 16, false));
         columnsStyle.setAlignment(HorizontalAlignment.CENTER);
         columnsStyle.setWrapText(true);
         columnsStyle.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -26,9 +27,9 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
         columnsStyle.setBorderBottom(BorderStyle.THIN);
         columnsStyle.setBorderLeft(BorderStyle.THIN);
         columnsStyle.setBorderRight(BorderStyle.THIN);
-        CellStyle styleBold = createCellStyle(workbook, createFont(workbook, "Times New Roman", 20, true));
+        CellStyle styleBold = createCellStyle(createFont("Times New Roman", 20, true));
 
-        setAllColumnsWidth(sheet);
+        setAllColumnsWidth();
 
         Row row9 = sheet.createRow(9);
         Row row10 = sheet.createRow(10);
@@ -43,18 +44,18 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
 
         writeDataToCell(row9, 0,  jsonData.getString("chapter_name"), styleBold);
 
-        createColumn(10,12,0,0,jsonData.getString("index_column"),columnsStyle,workbook,false);
-        createColumn(10,12,1,1,jsonData.getString("fio_column"),columnsStyle,workbook,false);
-        createColumn(10,12,2,2,jsonData.getString("post_column"),columnsStyle,workbook,false);
-        createColumn(10,12,3,3,jsonData.getString("subject_column"),columnsStyle,workbook,false);
+        createColumn(10,12,0,0,jsonData.getString("index_column"),columnsStyle,false);
+        createColumn(10,12,1,1,jsonData.getString("fio_column"),columnsStyle,false);
+        createColumn(10,12,2,2,jsonData.getString("post_column"),columnsStyle,false);
+        createColumn(10,12,3,3,jsonData.getString("subject_column"),columnsStyle,false);
 
-        createColumn(10,10,4,7,jsonData.getString("week_load_column"),columnsStyle,workbook,false);
-        createColumn(11,11,5,7,jsonData.getString("parts_load_column"),columnsStyle,workbook,false);
+        createColumn(10,10,4,7,jsonData.getString("week_load_column"),columnsStyle,false);
+        createColumn(11,11,5,7,jsonData.getString("parts_load_column"),columnsStyle,false);
 
-        createColumn(11,12,4,4,jsonData.getString("total_load_column"),columnsStyle,workbook,false);
-        createColumn(12,12,5,5,jsonData.getString("academic_load_column"),columnsStyle,workbook,false);
-        createColumn(12,12,6,6,jsonData.getString("additional_load_column"),columnsStyle,workbook,false);
-        createColumn(12,12,7,7,jsonData.getString("organization_load_column"),columnsStyle,workbook,false);
+        createColumn(11,12,4,4,jsonData.getString("total_load_column"),columnsStyle,false);
+        createColumn(12,12,5,5,jsonData.getString("academic_load_column"),columnsStyle,false);
+        createColumn(12,12,6,6,jsonData.getString("additional_load_column"),columnsStyle,false);
+        createColumn(12,12,7,7,jsonData.getString("organization_load_column"),columnsStyle,false);
 
         try (FileOutputStream outputStream = new FileOutputStream(fileName)) {
             workbook.write(outputStream);
@@ -62,26 +63,7 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
             throw new RuntimeException(ex);
         }
     }
-
-    private void createMergeColumn(int fromRow, int toRow,int fromColumn, int toColumn,
-                                          String jsonKey, JSONObject jsonData,
-                                          Sheet sheet, CellStyle style){
-        for(int i = fromRow;i<=toRow;i++){
-            Row row = sheet.getRow(i);
-            for(int j = fromColumn;j<=toColumn;j++){
-                Cell cell = row.createCell(j);
-                cell.setCellValue((String) reader.getValueFromJson(jsonKey,jsonData));
-                cell.setCellStyle(style);
-            }
-
-        }
-        if(fromRow == toRow && fromColumn == toColumn){
-            return;
-        }
-        CellRangeAddress mergedRegion = new CellRangeAddress(fromRow, toRow, fromColumn, toColumn);
-        sheet.addMergedRegion(mergedRegion);
-    }
-    public void setAllColumnsWidth(Sheet sheet){
+    public void setAllColumnsWidth(){
         setColumnWidth(0,50,sheet);
         setColumnWidth(1,290,sheet);
         setColumnWidth(2,200,sheet);
@@ -93,12 +75,11 @@ public class ExcelLoadTableCreator extends ExcelTableCreator {
     }
 
     @Override
-    public void addCommonData(int rowIndex, List<Teacher> teacherList, Workbook workbook) {
-        Sheet sheet = workbook.getSheetAt(0);
+    public void addCommonData(int rowIndex, List<Teacher> teacherList) {
         Row row = sheet.createRow(rowIndex);
         CellStyle style = workbook.createCellStyle();
         style.cloneStyleFrom(columnStyle);
-        Font font = createFont(workbook,"Times New Roman",16,true,false);
+        Font font = createFont("Times New Roman",16,true,false);
         style.setFont(font);
         style.setAlignment(HorizontalAlignment.LEFT);
 

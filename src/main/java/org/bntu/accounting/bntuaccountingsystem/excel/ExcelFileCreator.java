@@ -5,21 +5,31 @@ import org.json.JSONObject;
 
 public class ExcelFileCreator {
     private JsonFileReader reader = new JsonFileReader();
+    protected Workbook workbook;
+    protected Sheet sheet;
 
-    protected Font createFont(Workbook workbook, String fontFamily, int fontSize){
+    public ExcelFileCreator(Workbook workbook) {
+        this.workbook = workbook;
+        if (workbook!=null) {
+            this.sheet = workbook.getSheetAt(0);
+        }
+
+    }
+
+    protected Font createFont(String fontFamily, int fontSize){
         Font font = workbook.createFont();
         font.setFontName(fontFamily);
         font.setFontHeightInPoints((short) fontSize);
         return font;
     }
-    protected Font createFont(Workbook workbook, String fontFamily, int fontSize, boolean isBold){
+    protected Font createFont(String fontFamily, int fontSize, boolean isBold){
         Font font = workbook.createFont();
         font.setFontName(fontFamily);
         font.setFontHeightInPoints((short) fontSize);
         font.setBold(isBold);
         return font;
     }
-    protected Font createFont(Workbook workbook, String fontFamily, int fontSize, boolean isBold, boolean isItalic){
+    protected Font createFont(String fontFamily, int fontSize, boolean isBold, boolean isItalic){
         Font font = workbook.createFont();
         font.setFontName(fontFamily);
         font.setFontHeightInPoints((short) fontSize);
@@ -27,7 +37,7 @@ public class ExcelFileCreator {
         font.setItalic(isItalic);
         return font;
     }
-    protected CellStyle createCellStyle(Workbook workbook, Font font){
+    protected CellStyle createCellStyle(Font font){
         CellStyle style = workbook.createCellStyle();
         style.setFont(font);
         return style;
