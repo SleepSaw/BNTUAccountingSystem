@@ -1,12 +1,13 @@
 package org.bntu.accounting.bntuaccountingsystem.excel;
 
 import org.apache.poi.ss.usermodel.*;
+import org.bntu.accounting.bntuaccountingsystem.util.JsonFileReader;
 import org.json.JSONObject;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class ExcelFileHeaderCreator extends ExcelFileCreator {
+public class ExcelFileHeaderCreator extends ExcelUtil {
     private final JsonFileReader reader = new JsonFileReader();
     public ExcelFileHeaderCreator(Workbook workbook) {
         super(workbook);

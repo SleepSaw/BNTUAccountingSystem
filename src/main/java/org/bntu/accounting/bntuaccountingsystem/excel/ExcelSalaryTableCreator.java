@@ -1,10 +1,10 @@
 package org.bntu.accounting.bntuaccountingsystem.excel;
 
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
 import org.bntu.accounting.bntuaccountingsystem.services.LoadService;
 import org.bntu.accounting.bntuaccountingsystem.services.SalaryService;
+import org.bntu.accounting.bntuaccountingsystem.util.JsonFileReader;
 import org.json.JSONObject;
 
 import java.io.FileOutputStream;
@@ -175,18 +175,18 @@ public class ExcelSalaryTableCreator extends ExcelTableCreator  {
         addCell(row,4,teacher.getQualification(),styleAlignCenter);
         addCell(row,5,teacher.getExp(),styleAlignLeft);
         addCell(row,6,teacher.getCategory(),styleAlignCenter);
-        addCell(row,7,teacher.getSalary().getSalaryPerRate(),styleAlignLeft);
-        addCell(row,8,teacher.getSalary().getSalaryByLoad(),styleAlignLeft);
-        addCell(row,9,teacher.getSalary().getExpAllowance(),styleAlignLeft);
-        addCell(row,10,teacher.getSalary().getContractAllowance(),styleAlignLeft);
+        addCell(row,7,teacher.getSalary().getSalaryPerRate(),styleAlignRight);
+        addCell(row,8,teacher.getSalary().getSalaryByLoad(),styleAlignRight);
+        addCell(row,9,teacher.getSalary().getExpAllowance(),styleAlignRight);
+        addCell(row,10,teacher.getSalary().getContractAllowance(),styleAlignRight);
         addCell(row,11,"-",styleAlignCenter);
-        addCell(row,12,teacher.getSalary().getQualificationAllowance(),styleAlignLeft);
-        addCell(row,13,teacher.getSalary().getYoungSpecialistAllowance(),styleAlignLeft);
-        addCell(row,14,teacher.getSalary().getSixPercent(),styleAlignLeft);
-        addCell(row,15,teacher.getSalary().getAdditionalAllowance(),styleAlignLeft);
+        addCell(row,12,teacher.getSalary().getQualificationAllowance(),styleAlignRight  );
+        addCell(row,13,teacher.getSalary().getYoungSpecialistAllowance(),styleAlignRight);
+        addCell(row,14,teacher.getSalary().getSixPercent(),styleAlignRight);
+        addCell(row,15,teacher.getSalary().getAdditionalAllowance(),styleAlignRight);
         addCell(row,16,"-",styleAlignCenter);
         addCell(row,17,"-",styleAlignCenter);
-        addCell(row,18,teacher.getSalary().getTotalSalary(),styleAlignLeft);
+        addCell(row,18,teacher.getSalary().getTotalSalary(),styleAlignRight);
     }
     private void addCell(Row row, int cellIndex,String value,CellStyle style){
         Cell cell = row.createCell(cellIndex);

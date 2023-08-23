@@ -4,11 +4,10 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.bntu.accounting.bntuaccountingsystem.interfaces.ExcelTable;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
-import org.bntu.accounting.bntuaccountingsystem.services.LoadService;
 
 import java.util.List;
 
-public abstract class ExcelTableCreator extends ExcelFileCreator implements ExcelTable {
+public abstract class ExcelTableCreator extends ExcelUtil implements ExcelTable {
     protected CellStyle columnStyle;
     private Integer counter =0;
 
