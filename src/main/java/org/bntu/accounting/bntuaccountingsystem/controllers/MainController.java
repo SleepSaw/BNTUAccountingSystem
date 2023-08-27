@@ -7,11 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import org.bntu.accounting.bntuaccountingsystem.dao.LoadDAO;
-import org.bntu.accounting.bntuaccountingsystem.dao.TeacherDAO;
-import org.bntu.accounting.bntuaccountingsystem.models.Salary;
-import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
-import org.bntu.accounting.bntuaccountingsystem.services.SalaryService;
 
 import java.io.IOException;
 import java.net.URL;

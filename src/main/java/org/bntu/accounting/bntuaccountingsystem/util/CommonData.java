@@ -1,11 +1,14 @@
-package org.bntu.accounting.bntuaccountingsystem.models;
+package org.bntu.accounting.bntuaccountingsystem.util;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommonData {
+    private JsonFileReader fileReader = new JsonFileReader();
 
-    private double baseRate = 228;
+    private double baseRate;
 
     private double industryAllowance = 0.06;
 
@@ -52,7 +55,6 @@ public class CommonData {
             return youngSpecialistsAllowances.get(specialistType);
         }
         catch (NullPointerException e){
-            System.out.println(e.getMessage());
             return 0;
         }
 
@@ -107,6 +109,8 @@ public class CommonData {
     }
 
     private void init(){
+        JSONObject jsonObj = fileReader.readJsonFile("src\\main\\resources\\files\\options.json");
+        baseRate = jsonObj.getDouble("base_rate");
         tariffsByCategory.put(7,1.47);
         tariffsByCategory.put(8,1.57);
         tariffsByCategory.put(9,1.68);
@@ -116,7 +120,7 @@ public class CommonData {
         experienceAllowances.put("до 5 лет",0.1);
         experienceAllowances.put("5-10 лет",0.15);
         experienceAllowances.put("10-15 лет",0.20);
-        experienceAllowances.put("св. 15 лет",0.30);
+        experienceAllowances.put("cв. 15 лет",0.30);
 
         youngSpecialistsAllowances.put("Одарённый", 0.45);
         youngSpecialistsAllowances.put("Молодой специалист", 0.3);

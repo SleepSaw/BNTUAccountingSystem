@@ -45,9 +45,9 @@
                                     <TableColumn fx:id="totalLoadColumn" prefWidth="85.0" text="Всего часов" />
                                     <TableColumn prefWidth="328.0" text="В том числе часы">
                                        <columns>
-                                          <TableColumn fx:id="academicLoadColumn" onEditCommit="#academicLoadColumnAction" prefWidth="111.0" text="Учебные занятия" />
-                                          <TableColumn fx:id="addLoadColumn" onEditCommit="#addLoadColumnAction" prefWidth="118.0" text="Доп. деятельность" />
-                                          <TableColumn fx:id="orgLoadColumn" onEditCommit="#orgLoadColumnActon" prefWidth="99.0" text="Орг. работа" />
+                                          <TableColumn fx:id="academicLoadColumn"  prefWidth="111.0" text="Учебные занятия" />
+                                          <TableColumn fx:id="addLoadColumn"  prefWidth="118.0" text="Доп. деятельность" />
+                                          <TableColumn fx:id="orgLoadColumn"  prefWidth="99.0" text="Орг. работа" />
                                        </columns>
                                     </TableColumn>
                                  </columns>

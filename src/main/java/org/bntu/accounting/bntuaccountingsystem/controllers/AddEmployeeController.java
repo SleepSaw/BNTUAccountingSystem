@@ -5,6 +5,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import org.bntu.accounting.bntuaccountingsystem.models.Load;
+import org.bntu.accounting.bntuaccountingsystem.models.Salary;
 import org.bntu.accounting.bntuaccountingsystem.models.builder.TeacherBuilder;
 import org.bntu.accounting.bntuaccountingsystem.dao.TeacherDAO;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
@@ -54,7 +56,7 @@ public class AddEmployeeController extends BaseController implements Initializab
         initComboBox(qualificationComboBox,"qualifications","в.к.к.");
         initComboBox(specComboBox,"young_specialist","Нет");
         initComboBox(tariffComboBox,"tariffs","7");
-        initComboBox(expComboBox,"experiences","До 5 лет");
+        initComboBox(expComboBox,"experiences","до 5 лет");
 
     }
 }

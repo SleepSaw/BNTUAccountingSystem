@@ -20,22 +20,29 @@ public class LoadDAO {
                 .addAnnotatedClass(Salary.class);
         sessionFactory = configuration.buildSessionFactory();
     }
+    public void saveLoad(Load load){
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.beginTransaction();
+            session.update(load);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            System.out.println("Create HIBERNATE EXCEPTION");
+        }
+    }
     public void saveLoads(List<Teacher> teachers){
         try (Session session = sessionFactory.getCurrentSession()) {
             session.beginTransaction();
-            teachers.forEach(teacher -> {
                 try{
-                    Load load = session.get(Load.class, teacher.getId());
-                    load.setAcademicLoad(teacher.getLoad().getAcademicLoad());
-                    load.setOrgLoad(teacher.getLoad().getOrgLoad());
-                    load.setAddLoad(teacher.getLoad().getAddLoad());
-
+                    for (Teacher teacher: teachers) {
+                        Load load = session.get(Load.class, teacher.getId());
+                        load.setAcademicLoad(teacher.getLoad().getAcademicLoad());
+                        load.setOrgLoad(teacher.getLoad().getOrgLoad());
+                        load.setAddLoad(teacher.getLoad().getAddLoad());
+                    }
                 }
                 catch (NullPointerException e){
-                    teacher.getLoad().setTeacher(teacher);
-                    session.save(teacher.getLoad());
+                    System.out.println("kpdapokdpoaspodkpapsd");
                 }
-            });
             session.getTransaction().commit();
         } catch (HibernateException e) {
             System.out.println("Create HIBERNATE EXCEPTION");

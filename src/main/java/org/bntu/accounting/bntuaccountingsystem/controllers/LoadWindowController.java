@@ -13,6 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
+import org.bntu.accounting.bntuaccountingsystem.dao.LoadDAO;
 import org.bntu.accounting.bntuaccountingsystem.dao.TeacherDAO;
 import org.bntu.accounting.bntuaccountingsystem.excel.*;
 import org.bntu.accounting.bntuaccountingsystem.models.Load;
@@ -28,6 +29,7 @@ import java.util.ResourceBundle;
 public class LoadWindowController implements Initializable {
     private ObservableList<Teacher> teacherList;
     private TeacherDAO teacherDAO;
+    private LoadDAO loadDAO;
     @FXML
     private Button saveButton;
     @FXML
@@ -60,6 +62,7 @@ public class LoadWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         teacherDAO = new TeacherDAO();
+        loadDAO = new LoadDAO();
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
         postColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getPost()));
         subjectColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getSubject()));
@@ -81,21 +84,32 @@ public class LoadWindowController implements Initializable {
         // Установка обработчика события окончания редактирования ячейки
         academicLoadColumn.setOnEditCommit(event -> {
             Teacher teacher = event.getRowValue();
-            teacher.getLoad().setAcademicLoad(Double.parseDouble(event.getNewValue()));
-            teacher.getLoad().setTotalLoad(updateTotalLoad(teacher.getLoad()));
+            Load load = teacher.getLoad();
+            load.setAcademicLoad(Double.parseDouble(event.getNewValue()));
+            load.setTotalLoad(updateTotalLoad(teacher.getLoad()));
+            loadDAO.saveLoad(load);
             loadTable.refresh();
             System.out.println(teacher.getLoad().getTotalLoad());
         });
         // Установка обработчика события окончания редактирования ячейки
         addLoadColumn.setOnEditCommit(event -> {
             Teacher teacher = event.getRowValue();
-            teacher.getLoad().setAddLoad(Double.parseDouble(event.getNewValue()));
-            teacher.getLoad().setTotalLoad(updateTotalLoad(teacher.getLoad()));
+            Load load = teacher.getLoad();
+            load.setAddLoad(Double.parseDouble(event.getNewValue()));
+            load.setTotalLoad(updateTotalLoad(teacher.getLoad()));
             loadTable.refresh();
+            loadDAO.saveLoad(load);
             System.out.println(teacher.getLoad().getTotalLoad());
         });
         // Установка обработчика события окончания редактирования ячейки
         orgLoadColumn.setOnEditCommit(event -> {
+            Teacher teacher = event.getRowValue();
+            Load load = teacher.getLoad();
+            load.setOrgLoad(Double.parseDouble(event.getNewValue()));
+            load.setTotalLoad(updateTotalLoad(teacher.getLoad()));
+            loadTable.refresh();
+            loadDAO.saveLoad(load);
+            System.out.println(teacher.getLoad().getTotalLoad());
 
         });
         // Установка таблицы редактируемой
@@ -104,12 +118,8 @@ public class LoadWindowController implements Initializable {
     protected void addTeachersToTable() {
         teacherList = FXCollections.observableArrayList();
             List<Teacher> teachersFromDB = teacherDAO.findAllTeachers();
-            teachersFromDB.stream()
-                    .filter(teacher -> Objects.isNull(teacher.getLoad()))
-                    .forEach(teacher -> teacher.setLoad(new Load(0,0,0)));
             teacherList.addAll(teachersFromDB);
             loadTable.setItems(teacherList);
-
 
     }
     private double updateTotalLoad(Load load){
@@ -145,24 +155,5 @@ public class LoadWindowController implements Initializable {
             List<Teacher> teachers = teacherDAO.findAllTeachers();
             loadFileCreator.createFile(file.getPath(),teachers);
         }
-    }
-
-    @FXML
-    void academicLoadColumnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void addLoadColumnAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void orgLoadColumnActon(ActionEvent event) {
-
-    }
-    private void setEdit(ActionEvent event){
-
-
     }
 }

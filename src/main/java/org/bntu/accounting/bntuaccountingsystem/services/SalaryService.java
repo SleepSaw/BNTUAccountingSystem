@@ -1,6 +1,6 @@
 package org.bntu.accounting.bntuaccountingsystem.services;
 
-import org.bntu.accounting.bntuaccountingsystem.models.CommonData;
+import org.bntu.accounting.bntuaccountingsystem.util.CommonData;
 import org.bntu.accounting.bntuaccountingsystem.models.Load;
 import org.bntu.accounting.bntuaccountingsystem.models.Salary;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
@@ -23,6 +23,7 @@ public class SalaryService {
     // Оклад с учётом разряда (Минимальный)
     public Double findSalaryByEmployeesCategory(int category) {
         return baseRate * commonData.getTariffByCategory(category);
+
     }
     // Оклад с учётом нагрузки (Фактический)
     public Double findSalaryByEmployeesLoad(Load load) {

@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Table(name = "salary")
 public class Salary implements Serializable {
     @Id
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne()
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private Teacher teacher;
     @Column(name = "salary_rate")
@@ -55,6 +55,7 @@ public class Salary implements Serializable {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+        teacher.setSalary(this);
     }
 
     public double getSalaryPerRate() {

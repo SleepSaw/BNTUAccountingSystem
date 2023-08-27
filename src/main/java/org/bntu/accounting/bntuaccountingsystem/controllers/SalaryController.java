@@ -1,36 +1,32 @@
 package org.bntu.accounting.bntuaccountingsystem.controllers;
 
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import org.bntu.accounting.bntuaccountingsystem.dao.LoadDAO;
+import org.bntu.accounting.bntuaccountingsystem.dao.SalaryDAO;
 import org.bntu.accounting.bntuaccountingsystem.dao.TeacherDAO;
-import org.bntu.accounting.bntuaccountingsystem.excel.LoadFileCreator;
 import org.bntu.accounting.bntuaccountingsystem.excel.SalaryFileCreator;
-import org.bntu.accounting.bntuaccountingsystem.models.CommonData;
-import org.bntu.accounting.bntuaccountingsystem.models.Load;
 import org.bntu.accounting.bntuaccountingsystem.models.Salary;
+import org.bntu.accounting.bntuaccountingsystem.util.CommonData;
 import org.bntu.accounting.bntuaccountingsystem.models.Teacher;
-import org.bntu.accounting.bntuaccountingsystem.services.LoadService;
 import org.bntu.accounting.bntuaccountingsystem.services.SalaryService;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class SalaryController  implements Initializable {
+    private SalaryDAO salaryDAO;
     private CommonData commonData;
     private TeacherDAO teacherDAO;
     private LoadDAO loadDAO;
@@ -127,6 +123,7 @@ public class SalaryController  implements Initializable {
         loadDAO = new LoadDAO();
         salaryService = new SalaryService();
         commonData = new CommonData();
+        salaryDAO = new SalaryDAO();
 
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
         loadColumn.setCellValueFactory(data -> new SimpleStringProperty(Double.toString(data.getValue().getLoad().getTotalLoad())));
@@ -183,7 +180,9 @@ public class SalaryController  implements Initializable {
         List<Teacher> teachersFromDB = teacherDAO.findAllTeachers();
         teachersFromDB
                 .forEach(teacher -> {
-                    teacher.setSalary(salaryService.findCommonSalaryOfTeacher(teacher));
+                    Salary salary = salaryService.findCommonSalaryOfTeacher(teacher);
+                    salary.setTeacher(teacher);
+                    salaryDAO.updateSalary(salary);
                 });
         teacherList.addAll(teachersFromDB);
         table.setItems(teacherList);

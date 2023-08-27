@@ -16,4 +16,5 @@ module org.bntu.accounting.bntuaccountingsystem {
     opens org.bntu.accounting.bntuaccountingsystem.models to org.hibernate.orm.core, javafx.base,
             java.persistence,hibernate.entitymanager;
     exports org.bntu.accounting.bntuaccountingsystem;
+    opens org.bntu.accounting.bntuaccountingsystem.util to hibernate.entitymanager, java.persistence, javafx.base, org.hibernate.orm.core;
 }

@@ -3,7 +3,7 @@ package org.bntu.accounting.bntuaccountingsystem.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
-import org.bntu.accounting.bntuaccountingsystem.excel.JsonFileReader;
+import org.bntu.accounting.bntuaccountingsystem.util.JsonFileReader;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

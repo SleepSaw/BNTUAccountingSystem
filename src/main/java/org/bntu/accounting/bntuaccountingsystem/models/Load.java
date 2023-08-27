@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Table(name = "load")
 public class Load implements Serializable {
     @Id
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne()
     @JoinColumn(name = "teacher_id", referencedColumnName = "id")
     private Teacher teacher;
     @Column(name = "academic_load")
@@ -68,6 +68,7 @@ public class Load implements Serializable {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+        teacher.setLoad(this);
     }
 
     @Override
@@ -84,5 +85,12 @@ public class Load implements Serializable {
         double result = Math.round(value * 100);
         result = result/100;
         return result;
+    }
+    public void clone(Load load){
+        this.setTeacher(load.getTeacher());
+        this.setTotalLoad(load.getTotalLoad());
+        this.setAcademicLoad(load.getAcademicLoad());
+        this.setOrgLoad(load.getOrgLoad());
+        this.setAddLoad(load.getAddLoad());
     }
 }
