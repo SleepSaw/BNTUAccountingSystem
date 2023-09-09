@@ -1,4 +1,4 @@
-module org.bntu.accounting.bntuaccountingsystem {
+module org.bntu.accounting.application {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.naming;
@@ -12,9 +12,9 @@ module org.bntu.accounting.bntuaccountingsystem {
     requires org.apache.poi.ooxml;
     requires org.json;
 
-    opens org.bntu.accounting.bntuaccountingsystem.controllers to javafx.fxml;
-    opens org.bntu.accounting.bntuaccountingsystem.models to org.hibernate.orm.core, javafx.base,
+    exports application;
+    opens application.controllers to javafx.fxml;
+    opens application.models to org.hibernate.orm.core, javafx.base,
             java.persistence,hibernate.entitymanager;
-    exports org.bntu.accounting.bntuaccountingsystem;
-    opens org.bntu.accounting.bntuaccountingsystem.util to hibernate.entitymanager, java.persistence, javafx.base, org.hibernate.orm.core;
+    opens application.util to hibernate.entitymanager, java.persistence, javafx.base, org.hibernate.orm.core;
 }
