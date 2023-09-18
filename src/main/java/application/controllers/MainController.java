@@ -42,7 +42,7 @@ public class MainController implements Initializable {
 
     @FXML
     void optionsButtonAction(ActionEvent event) throws IOException {
-            FXMLLoader fxmlLoader = new FXMLLoader(EmployeeInfoController.class.getResource("/gui/java.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(EmployeeInfoController.class.getResource("/gui/employee-info.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(fxmlLoader.load()));
             stage.setTitle("Список сотрудников");

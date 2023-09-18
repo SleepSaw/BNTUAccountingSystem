@@ -8,14 +8,5 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/accounting_system</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="BNTUAccountingSystem/Hibernate" uuid="01d9e865-5b6e-40f9-96a2-a8a8e6e41f53">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>Hibernate</remarks>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/accounting_system</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
   </component>
 </project>

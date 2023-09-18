@@ -1,10 +1,10 @@
 package application.excel;
 
+import application.util.JSONFileLoader;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import application.models.Teacher;
-import application.util.JsonFileReader;
 import org.json.JSONObject;
 
 import java.io.FileOutputStream;
@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class SalaryFileCreator {
-    private final static String headerFilePath = "src\\main\\resources\\files\\excel_header.json";
-    private final static String salaryTableFilePath = "src\\main\\resources\\files\\salary_table.json";
-    private JsonFileReader jsonFileReader;
+    private final static String headerFilePath = "excel_header.json";
+    private final static String salaryTableFilePath = "salary_table.json";
+    private JSONFileLoader jsonFileLoader;
     private ExcelFileHeaderCreator headerCreator;
     private ExcelSalaryTableCreator SalaryTableCreator;
     private Workbook workbook;
@@ -24,8 +24,8 @@ public class SalaryFileCreator {
             this.workbook = workbook;
             Sheet sheet = workbook.createSheet("Педагогическая нагрузка");
             init();
-            JSONObject headersData = jsonFileReader.readJsonFile(headerFilePath);
-            JSONObject salaryTableData = jsonFileReader.readJsonFile(salaryTableFilePath);
+            JSONObject headersData = jsonFileLoader.loadJsonFile(headerFilePath);
+            JSONObject salaryTableData = jsonFileLoader.loadJsonFile(salaryTableFilePath);
             headerCreator.writeDataToExcel(filePath,12,headersData,workbook);
             SalaryTableCreator.createLoadTableColumns(filePath,salaryTableData);
             int endRow = SalaryTableCreator.addAllTeacherToTable(14,teacherList);
@@ -40,6 +40,6 @@ public class SalaryFileCreator {
     private void init(){
         headerCreator = new ExcelFileHeaderCreator(workbook);
         SalaryTableCreator = new ExcelSalaryTableCreator(workbook);
-        jsonFileReader = new JsonFileReader();
+        jsonFileLoader = new JSONFileLoader();
     }
 }

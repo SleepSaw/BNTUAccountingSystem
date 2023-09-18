@@ -3,6 +3,7 @@ package application.dao;
 import application.models.Load;
 import application.models.Salary;
 import application.models.Teacher;
+import application.util.DBManager;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,15 +12,8 @@ import org.hibernate.cfg.Configuration;
 import java.util.List;
 
 public class LoadDAO {
-    private final SessionFactory sessionFactory;
-
-    public LoadDAO() {
-        Configuration configuration = new Configuration().addAnnotatedClass(Teacher.class).addAnnotatedClass(Load.class)
-                .addAnnotatedClass(Salary.class);
-        sessionFactory = configuration.buildSessionFactory();
-    }
     public void saveLoad(Load load){
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = DBManager.getSession()) {
             session.beginTransaction();
             session.update(load);
             session.getTransaction().commit();
@@ -28,7 +22,7 @@ public class LoadDAO {
         }
     }
     public void saveLoads(List<Teacher> teachers){
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = DBManager.getSession()) {
             session.beginTransaction();
                 try{
                     for (Teacher teacher: teachers) {

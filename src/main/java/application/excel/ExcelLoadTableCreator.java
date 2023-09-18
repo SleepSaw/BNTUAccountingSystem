@@ -3,7 +3,6 @@ package application.excel;
 import org.apache.poi.ss.usermodel.*;
 import application.models.Teacher;
 import application.services.LoadService;
-import application.util.JsonFileReader;
 import org.json.JSONObject;
 
 import java.io.FileOutputStream;
@@ -11,7 +10,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class ExcelLoadTableCreator extends ExcelTableCreator {
-    private final JsonFileReader reader = new JsonFileReader();
 
     public ExcelLoadTableCreator(Workbook workbook) {
         super(workbook);

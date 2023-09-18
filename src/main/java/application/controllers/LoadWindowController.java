@@ -68,13 +68,14 @@ public class LoadWindowController implements Initializable {
 
         academicLoadColumn.setCellValueFactory(data -> new SimpleStringProperty(Double.toString(data.getValue().getLoad().getAcademicLoad())));
         addLoadColumn.setCellValueFactory(data -> new SimpleStringProperty(Double.toString(data.getValue().getLoad().getAddLoad())));
-        orgLoadColumn.setCellValueFactory (data -> new SimpleStringProperty(Double.toString(data.getValue().getLoad().getOrgLoad())));
-        totalLoadColumn.setCellValueFactory (data -> new SimpleStringProperty(Double.toString(data.getValue().getLoad().getTotalLoad())));
+        orgLoadColumn.setCellValueFactory(data -> new SimpleStringProperty(Double.toString(data.getValue().getLoad().getOrgLoad())));
+        totalLoadColumn.setCellValueFactory(data -> new SimpleStringProperty(Double.toString(data.getValue().getLoad().getTotalLoad())));
         setRowsIndexes();
         addTeachersToTable();
         provideEditableForLoad();
     }
-    private void provideEditableForLoad(){
+
+    private void provideEditableForLoad() {
         // Установка фабрики ячеек для редактирования
         academicLoadColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         addLoadColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -114,18 +115,21 @@ public class LoadWindowController implements Initializable {
         // Установка таблицы редактируемой
         loadTable.setEditable(true);
     }
+
     protected void addTeachersToTable() {
         teacherList = FXCollections.observableArrayList();
-            List<Teacher> teachersFromDB = teacherDAO.findAllTeachers();
-            teacherList.addAll(teachersFromDB);
-            loadTable.setItems(teacherList);
+        List<Teacher> teachersFromDB = teacherDAO.findAllTeachers();
+        teacherList.addAll(teachersFromDB);
+        loadTable.setItems(teacherList);
 
     }
-    private double updateTotalLoad(Load load){
+
+    private double updateTotalLoad(Load load) {
         return load.getAcademicLoad() + load.getAddLoad() + load.getOrgLoad();
     }
+
     // инициализация колонки с номерами строк
-    protected void setRowsIndexes(){
+    protected void setRowsIndexes() {
         indexColumn.setCellFactory(new Callback<>() {
             @Override
             public TableCell<Teacher, Integer> call(TableColumn<Teacher, Integer> param) {
@@ -144,6 +148,7 @@ public class LoadWindowController implements Initializable {
             }
         });
     }
+
     @FXML
     void saveButtonAction(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
@@ -152,7 +157,7 @@ public class LoadWindowController implements Initializable {
         if (file != null) {
             LoadFileCreator loadFileCreator = new LoadFileCreator();
             List<Teacher> teachers = teacherDAO.findAllTeachers();
-            loadFileCreator.createFile(file.getPath(),teachers);
+            loadFileCreator.createFile(file.getPath(), teachers);
         }
     }
 }

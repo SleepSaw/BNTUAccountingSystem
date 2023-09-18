@@ -3,6 +3,7 @@ package application.dao;
 import application.models.Load;
 import application.models.Salary;
 import application.models.Teacher;
+import application.util.DBManager;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,15 +12,8 @@ import org.hibernate.cfg.Configuration;
 import java.util.List;
 
 public class TeacherDAO {
-    private final SessionFactory sessionFactory;
-
-    public TeacherDAO() {
-        Configuration configuration = new Configuration().addAnnotatedClass(Teacher.class).addAnnotatedClass(Load.class)
-                .addAnnotatedClass(Salary.class);
-        sessionFactory = configuration.buildSessionFactory();
-    }
     public List<Teacher> findAllTeachers(){
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = DBManager.getSession()) {
             session.beginTransaction();
             List<Teacher> teachers = session.createQuery("select t from Teacher t order by t.name", Teacher.class).getResultList();
             session.getTransaction().commit();
@@ -30,7 +24,7 @@ public class TeacherDAO {
         return null;
     }
     public void saveTeacher(Teacher teacher){
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = DBManager.getSession()) {
             session.beginTransaction();
             Load load = new Load(0,0,0);
             load.setTeacher(teacher);
@@ -45,7 +39,7 @@ public class TeacherDAO {
         }
     }
     public void removeTeacher(Teacher teacher){
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = DBManager.getSession()) {
             session.beginTransaction();
             session.remove(teacher);
             session.getTransaction().commit();
@@ -54,7 +48,7 @@ public class TeacherDAO {
         }
     }
     public void updateTeacher(Teacher updatedTeacher){
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = DBManager.getSession()) {
             session.beginTransaction();
             Teacher teacher = session.get(Teacher.class,updatedTeacher.getId());
             teacher.setName(updatedTeacher.getName());

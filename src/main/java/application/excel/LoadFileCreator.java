@@ -1,10 +1,10 @@
 package application.excel;
 
+import application.util.JSONFileLoader;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import application.models.Teacher;
-import application.util.JsonFileReader;
 import org.json.JSONObject;
 
 import java.io.FileOutputStream;
@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class LoadFileCreator {
-    private final static String headerFilePath = "src\\main\\resources\\files\\excel_header.json";
-    private final static String loadTableFilePath = "src\\main\\resources\\files\\load_table.json";
-    private JsonFileReader jsonFileReader;
+    private final static String headerFilePath = "excel_header.json";
+    private final static String loadTableFilePath = "load_table.json";
+    private JSONFileLoader jsonFileLoader;
     private ExcelFileHeaderCreator headerCreator;
     private ExcelLoadTableCreator loadTableCreator;
     private Workbook workbook;
@@ -24,8 +24,8 @@ public class LoadFileCreator {
             this.workbook = workbook;
             Sheet sheet = workbook.createSheet("Педагогическая нагрузка");
             init();
-            JSONObject headersData = jsonFileReader.readJsonFile(headerFilePath);
-            JSONObject loadTableData = jsonFileReader.readJsonFile(loadTableFilePath);
+            JSONObject headersData = jsonFileLoader.loadJsonFile(headerFilePath);
+            JSONObject loadTableData = jsonFileLoader.loadJsonFile(loadTableFilePath);
             headerCreator.writeDataToExcel(filePath,5,headersData,workbook);
             loadTableCreator.createLoadTableColumns(filePath,loadTableData);
             int endRow = loadTableCreator.addAllTeacherToTable(14,teacherList);
@@ -40,7 +40,7 @@ public class LoadFileCreator {
     private void init(){
         headerCreator = new ExcelFileHeaderCreator(workbook);
         loadTableCreator = new ExcelLoadTableCreator(workbook);
-        jsonFileReader = new JsonFileReader();
+        jsonFileLoader = new JSONFileLoader();
     }
 
 }

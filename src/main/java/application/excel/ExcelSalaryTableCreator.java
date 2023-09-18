@@ -4,7 +4,6 @@ import org.apache.poi.ss.usermodel.*;
 import application.models.Teacher;
 import application.services.LoadService;
 import application.services.SalaryService;
-import application.util.JsonFileReader;
 import org.json.JSONObject;
 
 import java.io.FileOutputStream;
@@ -12,7 +11,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class ExcelSalaryTableCreator extends ExcelTableCreator  {
-    private final JsonFileReader reader = new JsonFileReader();
 
     public ExcelSalaryTableCreator(Workbook workbook) {
         super(workbook);

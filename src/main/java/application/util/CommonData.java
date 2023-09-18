@@ -2,18 +2,23 @@ package application.util;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommonData {
-    private JsonFileReader fileReader = new JsonFileReader();
+    private JSONFileLoader fileLoader = new JSONFileLoader();
 
     private double baseRate;
 
     private double industryAllowance = 0.06;
 
     public CommonData() {
-        init();
+        try {
+            init();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Map<Integer,Double> tariffsByCategory = new HashMap<>();
@@ -108,8 +113,10 @@ public class CommonData {
         this.qualificationAllowances = qualificationAllowances;
     }
 
-    private void init(){
-        JSONObject jsonObj = fileReader.readJsonFile("src\\main\\resources\\files\\options.json");
+    private void init() throws IOException {
+        JSONObject jsonObj = null;
+            jsonObj = fileLoader.loadJsonFile("options.json");
+
         baseRate = jsonObj.getDouble("base_rate");
         tariffsByCategory.put(7,1.47);
         tariffsByCategory.put(8,1.57);

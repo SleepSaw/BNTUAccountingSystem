@@ -1,10 +1,12 @@
 package application.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "teacher")
-public class Teacher {
+public class Teacher implements Serializable{
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
