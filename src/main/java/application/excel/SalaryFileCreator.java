@@ -26,7 +26,7 @@ public class SalaryFileCreator {
             init();
             JSONObject headersData = jsonFileLoader.loadJsonFile(headerFilePath);
             JSONObject salaryTableData = jsonFileLoader.loadJsonFile(salaryTableFilePath);
-            headerCreator.writeDataToExcel(filePath,12,headersData,workbook);
+            headerCreator.writeDataToExcel(filePath,12,headersData);
             SalaryTableCreator.createLoadTableColumns(filePath,salaryTableData);
             int endRow = SalaryTableCreator.addAllTeacherToTable(14,teacherList);
             SalaryTableCreator.addCommonData(endRow, teacherList);

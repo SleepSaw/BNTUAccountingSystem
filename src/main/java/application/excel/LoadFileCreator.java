@@ -26,7 +26,8 @@ public class LoadFileCreator {
             init();
             JSONObject headersData = jsonFileLoader.loadJsonFile(headerFilePath);
             JSONObject loadTableData = jsonFileLoader.loadJsonFile(loadTableFilePath);
-            headerCreator.writeDataToExcel(filePath,5,headersData,workbook);
+            headerCreator.writeDataToExcel(filePath,5,headersData);
+            headerCreator.createRightBlock(5,headersData);
             loadTableCreator.createLoadTableColumns(filePath,loadTableData);
             int endRow = loadTableCreator.addAllTeacherToTable(14,teacherList);
             loadTableCreator.addCommonData(endRow, teacherList);
